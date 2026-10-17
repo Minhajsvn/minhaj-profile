@@ -36,8 +36,12 @@
   }
 
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+  }
+
+  /* Lenis drives smooth scrolling; native smooth scroll is only a fallback without it */
+  html:not(.lenis) {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -48,8 +52,8 @@
   h1,
   h2,
   h3 {
-    @apply font-display tracking-tight;
-    font-optical-sizing: auto;
+    @apply font-display font-semibold;
+    letter-spacing: -0.035em;
   }
 
   ::selection {

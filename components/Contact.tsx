@@ -1,6 +1,8 @@
 import { profile } from "@/lib/data";
 import { Chat, Handshake, Mail } from "./Icons";
 import { Reveal } from "./Reveal";
+import { Magnetic } from "./motion/Magnetic";
+import { SplitReveal } from "./motion/SplitReveal";
 import { SocialLinks } from "./TopBar";
 
 export function Contact() {
@@ -16,24 +18,30 @@ export function Contact() {
         <div className="grid h-24 w-24 place-items-center rounded-full bg-background text-sage">
           <Handshake />
         </div>
-        <h2 id="contact-title" className="mt-8 text-balance text-4xl font-medium leading-[1.1] sm:text-5xl md:text-6xl">
-          Tell me about your <span className="italic text-muted">next project.</span>
-        </h2>
+        <SplitReveal
+          id="contact-title"
+          parts={[{ text: "Tell me about your" }, { text: "next project.", soft: true }]}
+          className="mt-8 text-balance text-4xl font-semibold leading-[1.1] sm:text-5xl md:text-6xl"
+        />
         <p className="mt-5 max-w-md text-muted">
           Open to full-time roles and freelance work in Dubai and remote. I usually reply within a day.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <a href={`mailto:${profile.email}`} className="btn-primary px-6">
-            <Mail /> Email me
-          </a>
-          <a
-            href={`https://wa.me/${profile.whatsapp}?text=${waText}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-ghost px-6"
-          >
-            <Chat /> WhatsApp<span className="sr-only"> (opens in a new tab)</span>
-          </a>
+          <Magnetic>
+            <a href={`mailto:${profile.email}`} className="btn-primary px-6">
+              <Mail /> Email me
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href={`https://wa.me/${profile.whatsapp}?text=${waText}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost px-6"
+            >
+              <Chat /> WhatsApp<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </Magnetic>
         </div>
       </Reveal>
 

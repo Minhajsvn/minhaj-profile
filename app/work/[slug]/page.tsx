@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Contact } from "@/components/Contact";
 import { ArrowUpRight } from "@/components/Icons";
+import { ScrollScale } from "@/components/motion/ScrollScale";
+import { ProjectCover } from "@/components/ProjectCover";
 import { Reveal } from "@/components/Reveal";
 import { Tags } from "@/components/Tags";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -150,7 +152,7 @@ export default async function ProjectPage({ params }: Params) {
         <article>
           <header className="panel bg-background px-4 pb-14 sm:px-8 sm:pb-20">
             <div className="flex items-center justify-between gap-4 px-1 py-5 sm:px-4">
-              <Link href="/#work" className="btn-ghost px-4">
+              <Link href="/#work" data-transition-label="Selected work" className="btn-ghost px-4">
                 <span aria-hidden>←</span> All work
               </Link>
               <nav aria-label="Social" className="flex items-center gap-2">
@@ -167,7 +169,7 @@ export default async function ProjectPage({ params }: Params) {
               <h1 className="mt-5 text-balance text-4xl font-medium leading-[1.08] sm:text-5xl md:text-6xl">
                 {project.title}
               </h1>
-              <p className="mt-3 font-display text-lg italic text-muted sm:text-xl">{project.type}</p>
+              <p className="mt-3 font-display text-lg font-light text-muted sm:text-xl">{project.type}</p>
               <p className="mx-auto mt-6 max-w-2xl text-pretty leading-relaxed sm:text-lg">{project.summary}</p>
               {project.meta && <p className="mt-6 text-sm text-muted">{project.meta}</p>}
               <div className="mt-8 flex justify-center">
@@ -177,6 +179,10 @@ export default async function ProjectPage({ params }: Params) {
               </div>
             </Reveal>
           </header>
+
+          <ScrollScale as="div" className="mx-auto mt-2 max-w-6xl overflow-hidden rounded-panel sm:mt-3">
+            <ProjectCover project={project} size="lg" priority />
+          </ScrollScale>
 
           <div className="mx-auto max-w-4xl px-4 py-20 sm:px-8 sm:py-28">
             {project.caseStudy ? (
@@ -195,6 +201,7 @@ export default async function ProjectPage({ params }: Params) {
         <nav aria-label="Next project" className="px-4 pb-20 sm:px-8">
           <Link
             href={`/work/${next.slug}`}
+            data-transition-label={next.title}
             className="panel group mx-auto flex max-w-4xl items-center justify-between gap-6 p-6 transition-colors hover:border-sage sm:p-10"
           >
             <div>

@@ -1,6 +1,7 @@
 import { services } from "@/lib/data";
 import { ServiceGlyph } from "./Icons";
 import { Reveal } from "./Reveal";
+import { SplitReveal } from "./motion/SplitReveal";
 
 export function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -16,11 +17,11 @@ export function SectionLabel({ children }: { children: React.ReactNode }) {
 export function Services() {
   return (
     <section aria-labelledby="services-title" className="px-4 py-20 sm:px-8 sm:py-28">
-      <Reveal className="mx-auto max-w-2xl text-center">
-        <h2 id="services-title" className="text-balance text-3xl font-medium leading-tight sm:text-4xl">
-          Partnering with brands and agencies <span className="italic text-muted">to ship work that performs.</span>
-        </h2>
-      </Reveal>
+      <SplitReveal
+        id="services-title"
+        parts={[{ text: "Partnering with brands and agencies" }, { text: "to ship work that performs.", soft: true }]}
+        className="mx-auto max-w-2xl text-balance text-center text-3xl font-semibold leading-tight sm:text-[2.6rem]"
+      />
 
       <div className="mx-auto mt-14 max-w-5xl">
         <SectionLabel>Services</SectionLabel>

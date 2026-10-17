@@ -1,5 +1,6 @@
 import { education, experience, skills } from "@/lib/data";
 import { Reveal } from "./Reveal";
+import { SplitReveal } from "./motion/SplitReveal";
 
 export function Experience() {
   return (
@@ -7,9 +8,11 @@ export function Experience() {
       <div className="mx-auto grid max-w-5xl gap-14 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
         <Reveal>
           <p className="eyebrow">Experience</p>
-          <h2 id="experience-title" className="mt-4 text-3xl font-medium leading-tight sm:text-4xl">
-            Where I&rsquo;ve been <span className="italic text-muted">building.</span>
-          </h2>
+          <SplitReveal
+            id="experience-title"
+            parts={[{ text: "Where I’ve been" }, { text: "building.", soft: true }]}
+            className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl"
+          />
 
           <h3 className="mt-12 font-sans text-sm font-semibold tracking-normal">Education</h3>
           <ul className="mt-4 space-y-4">

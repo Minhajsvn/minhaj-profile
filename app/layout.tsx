@@ -1,18 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { profile } from "@/lib/data";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
-const display = Fraunces({
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-  axes: ["opsz", "SOFT"],
-});
-
-const sans = Inter({
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -36,7 +31,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable}`} suppressHydrationWarning>
+    <html lang="en" className={poppins.variable} suppressHydrationWarning>
       <body>
         <a
           href="#main"

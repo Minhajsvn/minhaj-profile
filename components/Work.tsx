@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { projects } from "@/lib/projects";
 import { ArrowUpRight } from "./Icons";
-import { Reveal } from "./Reveal";
+import { ScrollScale } from "./motion/ScrollScale";
 import { SectionLabel } from "./Services";
 import { Tags } from "./Tags";
 import { WorkGrid } from "./WorkGrid";
@@ -18,13 +18,13 @@ export function Work() {
       </h2>
 
       {/* Featured project */}
-      <Reveal as="article" className="panel relative mx-auto mt-12 max-w-5xl overflow-hidden p-6 sm:p-10 lg:p-12">
+      <ScrollScale className="panel relative mx-auto mt-12 max-w-5xl overflow-hidden p-6 sm:p-10 lg:p-12">
         <span aria-hidden className="absolute left-0 top-10 h-12 w-1 rounded-r-full bg-accent sm:top-12" />
         <div className="grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-14">
           <div>
             <p className="eyebrow">Featured project</p>
             <h3 className="mt-4 text-3xl font-medium sm:text-4xl">{featured.title}</h3>
-            <p className="mt-2 font-display text-lg italic text-muted">{featured.type}</p>
+            <p className="mt-2 font-display text-lg font-light text-muted">{featured.type}</p>
             <p className="mt-6 leading-relaxed">{featured.summary}</p>
             <ul className="mt-6 space-y-3">
               {featured.highlights.slice(2, 5).map((h) => (
@@ -34,7 +34,7 @@ export function Work() {
                 </li>
               ))}
             </ul>
-            <Link href={`/work/${featured.slug}`} className="btn-primary mt-8 px-6">
+            <Link href={`/work/${featured.slug}`} data-transition-label={featured.title} className="btn-primary mt-8 px-6">
               Read the case study <ArrowUpRight />
             </Link>
           </div>
@@ -44,7 +44,7 @@ export function Work() {
               {cs.numbers.map((m) => (
                 <div key={m.label} className="flex flex-col-reverse gap-1 bg-background p-5 sm:p-6">
                   <dt className="text-xs uppercase tracking-wider text-muted">{m.label}</dt>
-                  <dd className="font-display text-3xl font-medium sm:text-4xl">{m.value}</dd>
+                  <dd className="text-3xl font-semibold tracking-tight sm:text-4xl">{m.value}</dd>
                 </div>
               ))}
             </dl>
@@ -54,7 +54,7 @@ export function Work() {
             </div>
           </div>
         </div>
-      </Reveal>
+      </ScrollScale>
 
       <WorkGrid items={projects.filter((p) => !p.featured)} />
     </section>

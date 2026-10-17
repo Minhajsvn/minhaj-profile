@@ -1,0 +1,30 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+
+const tags = { article: motion.article, div: motion.div } as const;
+
+/** Grows from slightly inset to full size as it scrolls into view. */
+export function ScrollScale({
+  children,
+  className = "",
+  as = "article",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  as?: keyof typeof tags;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.3"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.4], [0.4, 1]);
+  const Tag = tags[as] as typeof motion.div;
+
+  return (
+    <Tag ref={ref} style={reduce ? undefined : { scale, opacity }} className={className}>
+      {children}
+    </Tag>
+  );
+}

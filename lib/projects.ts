@@ -28,6 +28,8 @@ export type Project = {
   tags: string[];
   highlights: Highlight[];
   meta?: string;
+  /** Path under /public to a real screenshot (16:10). Without one, a generated cover is shown. */
+  cover?: string;
   featured?: boolean;
   caseStudy?: CaseStudy;
 };
