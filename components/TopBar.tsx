@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { profile, socials } from "@/lib/data";
 import { CopyEmail } from "./CopyEmail";
 import { ThemeToggle } from "./ThemeToggle";
@@ -42,10 +43,28 @@ export function TopBar() {
           CV
         </a>
       </div>
-      <nav aria-label="Social" className="flex items-center gap-2">
-        <SocialLinks className="hidden sm:flex" />
-        <ThemeToggle />
-      </nav>
+      <div className="flex items-center gap-2">
+        <nav aria-label="Site" className="flex items-center gap-1 text-sm font-medium">
+          {[
+            { href: "/work", label: "Work" },
+            { href: "/about", label: "About" },
+          ].map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              data-transition-label={l.label}
+              className="rounded-full px-3 py-2 transition-colors hover:bg-surface"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+        <nav aria-label="Social" className="flex items-center gap-2">
+          <span aria-hidden className="hidden h-4 w-px bg-border lg:block" />
+          <SocialLinks className="hidden lg:flex" />
+          <ThemeToggle />
+        </nav>
+      </div>
     </header>
   );
 }

@@ -6,8 +6,48 @@ export const profile = {
   email: "minhajrafeeq7@gmail.com",
   whatsapp: "971509572939",
   cv: "/Mohammad_Minhaj_Resume.pdf",
+  avatar: "/images/minhaj-avatar.webp",
+  avatarAlt: "3D illustrated avatar of Mohammad Minhaj in aviator sunglasses with a small gold crown, against a blue sky",
   summary:
     "Full-Stack Developer in Dubai building Shopify stores and apps, Next.js and React websites, and Node.js backends for jewellery, precious-metals and real estate brands across the UAE and GCC.",
+};
+
+export const story = {
+  intro:
+    "My first paid project put a live gold rate on a jeweller's homepage. A few years on, I'm still building for that world — Shopify stores, refinery sites and real-time pricing for brands across the UAE and GCC.",
+  chapters: [
+    {
+      year: "2020",
+      place: "Kochi, India",
+      title: "Learning to build",
+      body: "Started a Bachelor of Computer Applications in Artificial Intelligence at Yeldo Mar Baselios College.",
+    },
+    {
+      year: "2023",
+      place: "First client",
+      title: "Gold rates, live",
+      body: "Graduated and shipped a five-page site for Sulthan Bullion that shows live gold rates in AED and USD.",
+    },
+    {
+      year: "2025",
+      place: "Dubai, UAE",
+      title: "Shipping at agency pace",
+      body: "Joined 3R Creative and delivered 20+ production stores, sites and apps for jewellers, refineries and real estate.",
+    },
+    {
+      year: "2026",
+      place: "Sole engineer",
+      title: "Live Rate App",
+      body: "Built a Shopify app that keeps whole jewellery catalogs priced in step with the gold and silver markets.",
+    },
+    {
+      year: "Next",
+      place: "Open to new work",
+      title: "Your project?",
+      body: "Full-time roles and freelance builds, in Dubai or remote. Tell me what you are making.",
+      cta: true,
+    },
+  ],
 };
 
 export const socials = [
@@ -30,8 +70,8 @@ export const clients = [
 
 export const stats = [
   { value: "20+", label: "Production projects shipped" },
-  { value: "~2 yrs", label: "Building for UAE & GCC clients" },
-  { value: "9", label: "Brands in jewellery & bullion" },
+  { value: "9", label: "Jewellery & bullion brands" },
+  { value: "EN · AR", label: "Bilingual, right-to-left builds" },
 ];
 
 export type ServiceIcon = "store" | "layout" | "server" | "search";
@@ -40,22 +80,22 @@ export const services: { icon: ServiceIcon; title: string; body: string }[] = [
   {
     icon: "store",
     title: "Shopify Stores & Apps",
-    body: "Custom Liquid themes, Online Store 2.0 sections and embedded apps on the Admin GraphQL API.",
+    body: "Stores your team can edit themselves, with filters, wishlists, markets and payments set up properly.",
   },
   {
     icon: "layout",
     title: "Web Apps & Websites",
-    body: "Fast, responsive Next.js and React builds turned pixel-true from Figma, in English and Arabic.",
+    body: "Fast, polished sites built pixel-true from your designs, in English and Arabic.",
   },
   {
     icon: "server",
-    title: "Backends & Real-time",
-    body: "Node.js APIs, PostgreSQL and serverless Workers, plus live price feeds over WebSockets.",
+    title: "Platforms & Live Data",
+    body: "Dashboards, lead systems and live price feeds that keep running without babysitting.",
   },
   {
     icon: "search",
     title: "SEO & Analytics",
-    body: "Metadata, JSON-LD, sitemaps and prerendering, with GTM, GA and Meta Pixel wired in.",
+    body: "Pages search engines understand, with the tracking your marketing team needs from day one.",
   },
 ];
 

@@ -1,62 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { aedPerGram24, KARATS, money, useRates, type Dir } from "@/lib/rates";
 import { ArrowUpRight } from "./Icons";
 
-type Rates = { gold: number; silver: number; updatedAt: string };
-type Dir = "up" | "down" | "flat";
-
-const POLL_MS = 30_000;
-const AED_PER_USD = 3.6725; // pegged
-const GRAMS_PER_OZ = 31.1034768;
-const KARATS = [
-  { k: "24K", purity: 1 },
-  { k: "22K", purity: 22 / 24 },
-  { k: "21K", purity: 21 / 24 },
-  { k: "18K", purity: 18 / 24 },
-];
-
-const usd = (n: number) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-function useRates() {
-  const [rates, setRates] = useState<Rates | null>(null);
-  const [dir, setDir] = useState<Dir>("flat");
-  const [failed, setFailed] = useState(false);
-  const last = useRef<number | null>(null);
-
-  useEffect(() => {
-    let alive = true;
-    async function load() {
-      if (document.hidden) return;
-      try {
-        const res = await fetch("/api/rates", { cache: "no-store" });
-        if (!res.ok) throw new Error();
-        const next = (await res.json()) as Rates;
-        if (!alive) return;
-        if (last.current !== null) {
-          setDir(next.gold > last.current ? "up" : next.gold < last.current ? "down" : "flat");
-        }
-        last.current = next.gold;
-        setRates(next);
-        setFailed(false);
-      } catch {
-        if (alive) setFailed(true);
-      }
-    }
-    load();
-    const id = setInterval(load, POLL_MS);
-    document.addEventListener("visibilitychange", load);
-    return () => {
-      alive = false;
-      clearInterval(id);
-      document.removeEventListener("visibilitychange", load);
-    };
-  }, []);
-
-  return { rates, dir, failed };
-}
+const usd = (n: number) => money(n);
 
 /** A number that rolls to its new value whenever it changes. */
 function Rolling({ value, dir }: { value: string; dir: Dir }) {
@@ -95,7 +44,7 @@ export function LiveRates() {
   if (failed && !rates) return null; // feed down: leave no broken widget behind
 
   const arrow = dir === "up" ? "▲" : dir === "down" ? "▼" : "•";
-  const aedPerGram = rates ? (rates.gold * AED_PER_USD) / GRAMS_PER_OZ : 0;
+  const aedPerGram = rates ? aedPerGram24(rates.gold) : 0;
   const time = rates
     ? new Date(rates.updatedAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dubai" })
     : "";

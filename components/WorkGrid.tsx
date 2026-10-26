@@ -89,7 +89,7 @@ function useHoverPreview() {
   return { area, card, preview };
 }
 
-export function WorkGrid({ items }: { items: Project[] }) {
+export function WorkGrid({ items, filters = true }: { items: Project[]; filters?: boolean }) {
   const [active, setActive] = useState<Category | "all">("all");
   const visible = active === "all" ? items : items.filter((p) => p.category === active);
   const cursor = useHoverPreview();
@@ -97,6 +97,7 @@ export function WorkGrid({ items }: { items: Project[] }) {
   return (
     <div className="mx-auto mt-6 max-w-5xl">
       {cursor.preview}
+      {filters && (
       <div role="group" aria-label="Filter projects" className="flex flex-wrap justify-center gap-2">
         {categories.map((c) => {
           const count = c.id === "all" ? items.length : items.filter((p) => p.category === c.id).length;
@@ -117,9 +118,12 @@ export function WorkGrid({ items }: { items: Project[] }) {
           );
         })}
       </div>
-      <p className="sr-only" role="status" aria-live="polite">
-        Showing {visible.length} projects
-      </p>
+      )}
+      {filters && (
+        <p className="sr-only" role="status" aria-live="polite">
+          Showing {visible.length} projects
+        </p>
+      )}
 
       <motion.ul layout {...cursor.area} className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout" initial={false}>

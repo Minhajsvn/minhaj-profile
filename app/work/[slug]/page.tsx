@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Contact } from "@/components/Contact";
-import { ArrowUpRight } from "@/components/Icons";
+import { ArrowLeft, ArrowUpRight } from "@/components/Icons";
 import { ScrollScale } from "@/components/motion/ScrollScale";
 import { ProjectCover } from "@/components/ProjectCover";
 import { Reveal } from "@/components/Reveal";
@@ -153,7 +153,7 @@ export default async function ProjectPage({ params }: Params) {
           <header className="panel bg-background px-4 pb-14 sm:px-8 sm:pb-20">
             <div className="flex items-center justify-between gap-4 px-1 py-5 sm:px-4">
               <Link href="/#work" data-transition-label="Selected work" className="btn-ghost px-4">
-                <span aria-hidden>←</span> All work
+                <ArrowLeft /> All work
               </Link>
               <nav aria-label="Social" className="flex items-center gap-2">
                 <SocialLinks className="hidden sm:flex" />

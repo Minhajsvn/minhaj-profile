@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { profile, stats } from "@/lib/data";
 import { ArrowDown } from "./Icons";
@@ -36,13 +37,15 @@ export function Hero() {
           transition={{ duration: 0.7, ease }}
           className="relative"
         >
-          {/* Monogram stands in for a headshot — swap for next/image when a photo is ready. */}
-          <div
-            role="img"
-            aria-label={`${profile.name} monogram`}
-            className="relative grid h-24 w-24 place-items-center rounded-full bg-primary text-primary-foreground ring-4 ring-surface sm:h-28 sm:w-28"
-          >
-            <span className="text-3xl font-semibold tracking-tight sm:text-4xl">MM</span>
+          <div className="relative h-24 w-24 sm:h-28 sm:w-28">
+            <Image
+              src={profile.avatar}
+              alt={profile.avatarAlt}
+              fill
+              priority
+              sizes="112px"
+              className="rounded-full object-cover object-[50%_40%] ring-4 ring-surface"
+            />
             <span aria-hidden className="absolute -right-0.5 top-2 h-3 w-3 rounded-full bg-accent ring-4 ring-background" />
           </div>
           <motion.span

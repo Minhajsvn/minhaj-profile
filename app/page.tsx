@@ -1,9 +1,10 @@
 import { Clients } from "@/components/Clients";
 import { Contact } from "@/components/Contact";
-import { Experience } from "@/components/Experience";
 import { Hero } from "@/components/Hero";
 import { LiveRates } from "@/components/LiveRates";
+import { PriceLab } from "@/components/PriceLab";
 import { Services } from "@/components/Services";
+import { Story } from "@/components/Story";
 import { Work } from "@/components/Work";
 import { profile, socials } from "@/lib/data";
 
@@ -25,9 +26,10 @@ export default function Home() {
         <LiveRates />
         <Hero />
         <Clients />
-        <Services />
         <Work />
-        <Experience />
+        <PriceLab />
+        <Story />
+        <Services />
         <Contact />
       </main>
     </div>
