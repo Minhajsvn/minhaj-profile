@@ -1,8 +1,6 @@
 import { Clients } from "@/components/Clients";
 import { Contact } from "@/components/Contact";
 import { Hero } from "@/components/Hero";
-import { LiveRates } from "@/components/LiveRates";
-import { PriceLab } from "@/components/PriceLab";
 import { Services } from "@/components/Services";
 import { Story } from "@/components/Story";
 import { Work } from "@/components/Work";
@@ -23,11 +21,9 @@ export default function Home() {
     <div className="mx-auto w-full max-w-[1280px] p-2 sm:p-4 lg:p-6">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main id="main" className="flex flex-col gap-2 sm:gap-3">
-        <LiveRates />
         <Hero />
         <Clients />
         <Work />
-        <PriceLab />
         <Story />
         <Services />
         <Contact />

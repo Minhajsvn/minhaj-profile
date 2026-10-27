@@ -5,6 +5,7 @@ import { Contact } from "@/components/Contact";
 import { ArrowLeft, ArrowUpRight } from "@/components/Icons";
 import { ScrollScale } from "@/components/motion/ScrollScale";
 import { ProjectCover } from "@/components/ProjectCover";
+import { ProjectVideo } from "@/components/ProjectVideo";
 import { Reveal } from "@/components/Reveal";
 import { Tags } from "@/components/Tags";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -181,7 +182,13 @@ export default async function ProjectPage({ params }: Params) {
           </header>
 
           <ScrollScale as="div" className="mx-auto mt-2 max-w-6xl overflow-hidden rounded-panel sm:mt-3">
-            <ProjectCover project={project} size="lg" priority />
+            {project.video && project.cover ? (
+              <div className="aspect-[16/10]">
+                <ProjectVideo src={project.video} poster={project.cover} label={project.title} />
+              </div>
+            ) : (
+              <ProjectCover project={project} size="lg" priority />
+            )}
           </ScrollScale>
 
           <div className="mx-auto max-w-4xl px-4 py-20 sm:px-8 sm:py-28">

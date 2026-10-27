@@ -30,6 +30,8 @@ export type Project = {
   meta?: string;
   /** Path under /public to a real screenshot (16:10). Without one, a generated cover is shown. */
   cover?: string;
+  /** Path under /public to a short muted screen recording of the live site. */
+  video?: string;
   featured?: boolean;
   caseStudy?: CaseStudy;
 };
@@ -126,6 +128,8 @@ export const projects: Project[] = [
   // ——— Shopify ———
   {
     slug: "blue-diamond-jewellery",
+    cover: "/media/blue-diamond-jewellery.webp",
+    video: "/media/blue-diamond-jewellery.mp4",
     title: "Blue Diamond Jewellery",
     type: "Full-featured Shopify jewellery e-commerce store",
     category: "shopify",
@@ -232,6 +236,8 @@ export const projects: Project[] = [
   },
   {
     slug: "promise-gold-refinery",
+    cover: "/media/promise-gold-refinery.webp",
+    video: "/media/promise-gold-refinery.mp4",
     title: "Promise Gold Refinery",
     type: "Next.js corporate refinery website",
     category: "web",
@@ -267,6 +273,8 @@ export const projects: Project[] = [
   },
   {
     slug: "blackmamba-real-estate",
+    cover: "/media/blackmamba-real-estate.webp",
+    video: "/media/blackmamba-real-estate.mp4",
     title: "BlackMamba Real Estate",
     type: "Next.js luxury real-estate web app",
     category: "web",
@@ -284,6 +292,8 @@ export const projects: Project[] = [
   },
   {
     slug: "3r-creative",
+    cover: "/media/3r-creative.webp",
+    video: "/media/3r-creative.mp4",
     title: "3R Creative",
     type: "Next.js creative agency website",
     category: "web",
@@ -301,6 +311,8 @@ export const projects: Project[] = [
   },
   {
     slug: "insight-edge-global",
+    cover: "/media/insight-edge-global.webp",
+    video: "/media/insight-edge-global.mp4",
     title: "Insight Edge Global",
     type: "Audit & advisory website for the precious-metals industry",
     category: "web",
@@ -322,6 +334,8 @@ export const projects: Project[] = [
   },
   {
     slug: "aurify-technology",
+    cover: "/media/aurify-technology.webp",
+    video: "/media/aurify-technology.mp4",
     title: "Aurify Technology",
     type: "Next.js corporate & product website",
     category: "web",
@@ -355,6 +369,8 @@ export const projects: Project[] = [
   // ——— Apps & platforms ———
   {
     slug: "hi-life-furniture-rentals",
+    cover: "/media/hi-life-furniture-rentals.webp",
+    video: "/media/hi-life-furniture-rentals.mp4",
     title: "Hi-Life Furniture Rentals",
     type: "Marketing website & leads platform",
     category: "app",

@@ -14,7 +14,7 @@ export const profile = {
 
 export const story = {
   intro:
-    "My first paid project put a live gold rate on a jeweller's homepage. A few years on, I'm still building for that world — Shopify stores, refinery sites and real-time pricing for brands across the UAE and GCC.",
+    "I started with a five-page website for one client. A few years on, I've shipped 20+ stores, sites and apps for jewellers, refineries, real estate and events brands across the UAE and GCC.",
   chapters: [
     {
       year: "2020",
@@ -25,7 +25,7 @@ export const story = {
     {
       year: "2023",
       place: "First client",
-      title: "Gold rates, live",
+      title: "Shipping for real",
       body: "Graduated and shipped a five-page site for Sulthan Bullion that shows live gold rates in AED and USD.",
     },
     {

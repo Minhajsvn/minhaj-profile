@@ -20,7 +20,8 @@ export default function WorkPage() {
           intro="Shopify stores and apps, corporate websites and full-stack platforms for jewellers, refineries, real estate and events brands across the UAE and GCC."
         />
         <section aria-label="All projects" className="px-4 pb-20 pt-6 sm:px-8 sm:pb-28">
-          <WorkGrid items={projects} />
+          {/* Projects with live-site recordings first; order is otherwise kept. */}
+          <WorkGrid items={[...projects].sort((a, b) => Number(!!b.video) - Number(!!a.video))} />
         </section>
         <Contact />
       </main>
