@@ -7,6 +7,8 @@ import {
   HandshakeIcon,
   Mail01Icon,
   Moon02Icon,
+  PauseIcon,
+  PlayIcon,
   SeoIcon,
   ServerStack01Icon,
   Store01Icon,
@@ -45,6 +47,8 @@ export const Chat = icon(WhatsappIcon);
 export const Sun = icon(Sun03Icon, 18);
 export const Moon = icon(Moon02Icon, 18);
 export const Handshake = icon(HandshakeIcon, 40);
+export const Play = icon(PlayIcon, 18);
+export const Pause = icon(PauseIcon, 18);
 
 const serviceIcons: Record<ServiceIcon, IconSvgElement> = {
   store: Store01Icon,

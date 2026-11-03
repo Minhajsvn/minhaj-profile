@@ -184,7 +184,7 @@ export default async function ProjectPage({ params }: Params) {
           <ScrollScale as="div" className="mx-auto mt-2 max-w-6xl overflow-hidden rounded-panel sm:mt-3">
             {project.video && project.cover ? (
               <div className="aspect-[16/10]">
-                <ProjectVideo src={project.video} poster={project.cover} label={project.title} />
+                <ProjectVideo src={project.video} poster={project.cover} label={`screen recording of ${project.title}`} />
               </div>
             ) : (
               <ProjectCover project={project} size="lg" priority />

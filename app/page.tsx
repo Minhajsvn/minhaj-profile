@@ -2,6 +2,7 @@ import { Clients } from "@/components/Clients";
 import { Contact } from "@/components/Contact";
 import { Hero } from "@/components/Hero";
 import { Services } from "@/components/Services";
+import { Showreel } from "@/components/Showreel";
 import { Story } from "@/components/Story";
 import { Work } from "@/components/Work";
 import { profile, socials } from "@/lib/data";
@@ -23,6 +24,7 @@ export default function Home() {
       <main id="main" className="flex flex-col gap-2 sm:gap-3">
         <Hero />
         <Clients />
+        <Showreel />
         <Work />
         <Story />
         <Services />

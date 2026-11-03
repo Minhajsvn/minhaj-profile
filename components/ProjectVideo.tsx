@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
+import { Pause, Play } from "./Icons";
 
 /**
- * Muted, looping screen recording of a live site.
- * - `playing` given: the parent controls it (e.g. card hover).
- * - `playing` omitted: plays while on screen, pauses off screen.
- * Reduced-motion users get the poster and native controls instead of autoplay.
+ * Muted, looping screen recording.
+ * - `playing` given: the parent controls it (e.g. card hover); no controls are shown.
+ * - `playing` omitted: plays while on screen, with a pause/play button (WCAG 2.2.2).
+ * Reduced-motion users start paused on the poster and can press play.
  */
 export function ProjectVideo({
   src,
@@ -28,6 +29,7 @@ export function ProjectVideo({
   const ref = useRef<HTMLVideoElement>(null);
   const reduce = useReducedMotion();
   const [inView, setInView] = useState(false);
+  const [userPaused, setUserPaused] = useState<boolean | null>(null);
   const controlled = playing !== undefined;
 
   useEffect(() => {
@@ -37,7 +39,9 @@ export function ProjectVideo({
     return () => io.disconnect();
   }, [controlled]);
 
-  const shouldPlay = !reduce && (controlled ? playing : inView);
+  // A user's choice wins; otherwise reduced motion starts paused.
+  const paused = userPaused ?? !!reduce;
+  const shouldPlay = controlled ? !reduce && playing : inView && !paused;
 
   useEffect(() => {
     const v = ref.current;
@@ -46,7 +50,7 @@ export function ProjectVideo({
     else v.pause();
   }, [shouldPlay]);
 
-  return (
+  const video = (
     <video
       ref={ref}
       src={src}
@@ -55,11 +59,26 @@ export function ProjectVideo({
       loop
       playsInline
       preload={controlled ? "none" : "metadata"}
-      controls={!decorative && (reduce ?? false)}
-      aria-label={decorative ? undefined : `Screen recording of ${label}`}
+      aria-label={decorative ? undefined : label}
       aria-hidden={decorative || undefined}
-      tabIndex={decorative ? -1 : undefined}
+      tabIndex={-1}
       className={`h-full w-full object-cover ${className}`}
     />
+  );
+
+  if (controlled) return video;
+
+  return (
+    <div className="relative h-full w-full">
+      {video}
+      <button
+        type="button"
+        onClick={() => setUserPaused(!paused)}
+        aria-label={paused ? `Play ${label}` : `Pause ${label}`}
+        className="absolute bottom-3 right-3 grid h-11 w-11 place-items-center rounded-full bg-[#002E23]/80 text-[#F2EEE9] backdrop-blur transition-colors hover:bg-[#002E23]"
+      >
+        {paused ? <Play /> : <Pause />}
+      </button>
+    </div>
   );
 }
