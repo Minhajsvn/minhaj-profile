@@ -16,7 +16,7 @@ export default function AboutPage() {
       <main id="main" className="flex flex-col gap-2 sm:gap-3">
         <PageHeader
           eyebrow={`${profile.role} · ${profile.location}`}
-          title={[{ text: "The full" }, { text: "picture.", soft: true }]}
+          title="The full picture."
           intro="Where I've worked, what I studied and the tools I reach for. The short version is on my CV."
         />
         <div className="flex justify-center px-4 pt-10">

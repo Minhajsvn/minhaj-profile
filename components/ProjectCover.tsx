@@ -2,10 +2,11 @@ import Image from "next/image";
 import type { Category, Project } from "@/lib/projects";
 
 // Fixed artwork colours (not theme tokens) so covers read as posters in both modes.
+// Fixed artwork colours from the Editorial Mono palette, so covers read as posters on ink and paper.
 const themes: Record<Category, { bg: string; fg: string; line: string; dot: string }> = {
-  shopify: { bg: "#002E23", fg: "#F2EEE9", line: "rgba(212,162,76,0.55)", dot: "#D4A24C" },
-  web: { bg: "#0F4A3A", fg: "#F2EEE9", line: "rgba(143,168,154,0.5)", dot: "#D4A24C" },
-  app: { bg: "#D4A24C", fg: "#002E23", line: "rgba(0,46,35,0.28)", dot: "#002E23" },
+  shopify: { bg: "#0E0E0C", fg: "#EFEDE6", line: "rgba(239,237,230,0.25)", dot: "#C6F432" },
+  web: { bg: "#EFEDE6", fg: "#0E0E0C", line: "rgba(14,14,12,0.2)", dot: "#0E0E0C" },
+  app: { bg: "#C6F432", fg: "#0E0E0C", line: "rgba(14,14,12,0.25)", dot: "#0E0E0C" },
 };
 
 const label: Record<Category, string> = { shopify: "Shopify", web: "Website", app: "Platform" };
