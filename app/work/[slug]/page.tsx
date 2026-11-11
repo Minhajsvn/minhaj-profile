@@ -71,17 +71,17 @@ function CaseStudyBody({ cs }: { cs: CaseStudy }) {
       <Reveal className="rule gutter grid-12 gap-y-10 border-t py-12 md:py-16">
         <div className="col-span-12 md:col-span-5">
           <p className="label muted">01 · The problem</p>
-          <h2 className="mt-2 text-3xl font-medium tracking-[-0.03em]">Prices that drift from the market</h2>
+          <h2 className="mt-2 text-3xl font-medium tracking-[-0.03em]">{cs.titles.problem}</h2>
           <p className="mt-4 max-w-[60ch] leading-relaxed">{cs.problem}</p>
         </div>
         <div className="col-span-12 md:col-span-5 md:col-start-8">
           <p className="label muted">02 · The solution</p>
-          <h2 className="mt-2 text-3xl font-medium tracking-[-0.03em]">The catalog follows the market</h2>
+          <h2 className="mt-2 text-3xl font-medium tracking-[-0.03em]">{cs.titles.solution}</h2>
           <p className="mt-4 max-w-[60ch] leading-relaxed">{cs.solution}</p>
         </div>
       </Reveal>
 
-      <Block n="03 · Architecture" title="A monorepo in four parts">
+      <Block n="03 · Architecture" title={cs.titles.architecture}>
         <table className="w-full text-left text-sm">
           <thead className="label muted">
             <tr>
@@ -109,7 +109,7 @@ function CaseStudyBody({ cs }: { cs: CaseStudy }) {
         </ul>
       </Block>
 
-      <Block n="04 · Key engineering" title="Built to be safe in production">
+      <Block n="04 · Key engineering" title={cs.titles.engineering}>
         <ol className="rule border-b">
           {cs.engineering.map((e, i) => (
             <li key={e.title} className="rule grid grid-cols-[2.5rem_1fr] border-t py-4">
@@ -127,11 +127,11 @@ function CaseStudyBody({ cs }: { cs: CaseStudy }) {
         <p className="label muted gutter">05 · By the numbers — from the repository</p>
         <dl className="gutter grid-12 mt-8 gap-y-10">
           {cs.numbers.map((n) => (
-            <div key={n.label} className="col-span-6 md:col-span-3">
+            <div key={n.label} className="col-span-6 flex flex-col-reverse items-start md:col-span-3">
+              <dt className="label muted mt-3">{n.label}</dt>
               <dd className="inline-block border-b-2 border-lime pb-1 text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-none tracking-[-0.05em]">
                 {n.value}
               </dd>
-              <dt className="label muted mt-3">{n.label}</dt>
             </div>
           ))}
         </dl>

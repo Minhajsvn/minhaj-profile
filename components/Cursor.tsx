@@ -4,20 +4,18 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion, useSpring } from "framer-motion";
 import type { Tone } from "./Section";
 import { toneAt } from "./tone";
+import { useFinePointer } from "./motion/useFinePointer";
 
 /** Dot cursor for fine pointers: lime on ink, ink on paper, grows over links. Absent on touch and reduced motion. */
 export function Cursor() {
   const reduce = useReducedMotion();
-  const [enabled, setEnabled] = useState(false);
+  const fine = useFinePointer();
+  const enabled = fine && !reduce;
   const [tone, setTone] = useState<Tone>("paper");
   const [big, setBig] = useState(false);
   const spring = { stiffness: 500, damping: 40, mass: 0.3 };
   const x = useSpring(-100, spring);
   const y = useSpring(-100, spring);
-
-  useEffect(() => {
-    setEnabled(!reduce && window.matchMedia("(pointer: fine)").matches);
-  }, [reduce]);
 
   useEffect(() => {
     if (!enabled) return;

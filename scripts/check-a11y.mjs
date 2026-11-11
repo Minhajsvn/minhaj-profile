@@ -35,5 +35,38 @@ await ctx.addInitScript(() => { try { sessionStorage.setItem("intro-seen", "1");
   const shown = await p.evaluate(() => !!document.querySelector("[data-cursor-preview] > *"));
   report(!shown, "no preview on keyboard focus"); await p.close(); }
 
+// 5. No hero flash: on a first visit the ink cover is in place before hydration, and gone after the intro.
+{ const p = await (await b.newContext()).newPage();
+  let early = null;
+  p.on("domcontentloaded", async () => { early = await p.evaluate(() => document.documentElement.classList.contains("intro-pending")).catch(() => null); });
+  await p.goto(base + "/", { waitUntil: "domcontentloaded" });
+  await p.waitForTimeout(3000);
+  const late = await p.evaluate(() => document.documentElement.classList.contains("intro-pending"));
+  report(early === true && late === false, "ink cover before hydration, removed after intro", JSON.stringify({ early, late })); await p.close(); }
+
+// 6. Top bar items do not overlap at 360px, and nav links are at least 24px tall.
+{ const c = await b.newContext({ viewport: { width: 360, height: 760 } });
+  await c.addInitScript(() => { try { sessionStorage.setItem("intro-seen", "1"); } catch {} });
+  const p = await c.newPage(); await p.goto(base + "/", { waitUntil: "networkidle" });
+  const r = await p.evaluate(() => {
+    const kids = [...document.querySelector("header.fixed").children].map((el) => el.getBoundingClientRect());
+    const overlap = kids.some((a, i) => kids.some((b2, j) => j > i && a.right > b2.left + 1 && b2.right > a.left + 1));
+    const minTap = Math.min(...[...document.querySelectorAll('header.fixed nav a')].map((a) => a.getBoundingClientRect().height));
+    return { overlap, minTap: Math.round(minTap) };
+  });
+  report(!r.overlap && r.minTap >= 24, "top bar fits at 360px", JSON.stringify(r)); await c.close(); }
+
+// 7. Every <dt> comes before its <dd>; the lime band link says it opens email.
+{ const p = await ctx.newPage();
+  const bad = [];
+  for (const path of ["/", "/work/live-rate-app"]) {
+    await p.goto(base + path, { waitUntil: "networkidle" });
+    bad.push(...(await p.evaluate((path) => [...document.querySelectorAll("dl > div")].filter((d) => d.firstElementChild?.tagName === "DD").map(() => path), path)));
+  }
+  report(bad.length === 0, "dt before dd", bad.join(","));
+  await p.goto(base + "/", { waitUntil: "networkidle" });
+  const name = await p.evaluate(() => { const a = document.querySelector("#contact a.bg-lime"); return a?.getAttribute("aria-label") || a?.textContent || ""; });
+  report(/email/i.test(name), "lime band link names email", JSON.stringify(name)); await p.close(); }
+
 await b.close();
 process.exit(failed ? 1 : 0);

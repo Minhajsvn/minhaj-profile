@@ -11,6 +11,9 @@ const dubaiClock = new Intl.DateTimeFormat("en-GB", {
 /** "HH:MM" in Dubai, 24-hour. */
 export const formatDubaiTime = (date: Date): string => dubaiClock.format(date);
 
+/** Milliseconds until the next whole minute, so a clock can tick on the minute. */
+export const msToNextMinute = (date: Date): number => 60_000 - (date.getTime() % 60_000);
+
 /** 0-based index → "01", "02" … */
 export const indexNumber = (i: number): string => String(i + 1).padStart(2, "0");
 

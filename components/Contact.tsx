@@ -14,6 +14,7 @@ export function Contact() {
 
       <a
         href={`mailto:${profile.email}`}
+        aria-label={`Email me at ${profile.email} — let's build`}
         className="group block bg-lime text-ink transition-colors hover:bg-paper"
       >
         <h2 id="contact-title" className="text-title gutter py-6 md:py-10">

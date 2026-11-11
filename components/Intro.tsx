@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-
-const KEY = "intro-seen";
+import { INTRO_KEY as KEY } from "@/lib/intro";
 const DURATION = 900; // counter time; the wipe adds ~300 ms, total ≤ 1.2 s
 
 function seen(): boolean {
@@ -20,6 +19,11 @@ function markSeen() {
   } catch {}
 }
 
+/** Drop the pre-hydration ink cover set by introPendingScript (lib/intro.ts). */
+function uncover() {
+  document.documentElement.classList.remove("intro-pending");
+}
+
 /**
  * First visit per session: an ink screen counts to 100 then wipes up.
  * The page underneath is rendered normally, so no-JS and crawlers see it.
@@ -30,8 +34,16 @@ export function Intro() {
   const [count, setCount] = useState(0);
   const [gone, setGone] = useState(false);
 
+  // Once the overlay is on screen it covers the page itself, so the CSS cover can go.
   useEffect(() => {
-    if (reduce || seen()) return;
+    if (show) uncover();
+  }, [show]);
+
+  useEffect(() => {
+    if (reduce || seen()) {
+      uncover();
+      return;
+    }
     markSeen();
     setShow(true);
     const start = performance.now();

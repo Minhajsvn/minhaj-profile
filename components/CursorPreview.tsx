@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AnimatePresence, motion, useReducedMotion, useSpring } from "framer-motion";
 import type { Project } from "@/lib/projects";
 import { ProjectCover } from "./ProjectCover";
 import { ProjectVideo } from "./ProjectVideo";
+import { useFinePointer } from "./motion/useFinePointer";
 
 /**
  * 320×200 media box that trails the pointer while a work row is hovered.
@@ -12,14 +13,11 @@ import { ProjectVideo } from "./ProjectVideo";
  */
 export function CursorPreview({ project }: { project: Project | null }) {
   const reduce = useReducedMotion();
-  const [enabled, setEnabled] = useState(false);
+  const fine = useFinePointer();
+  const enabled = fine && !reduce;
   const spring = { stiffness: 300, damping: 30, mass: 0.5 };
   const x = useSpring(0, spring);
   const y = useSpring(0, spring);
-
-  useEffect(() => {
-    setEnabled(!reduce && window.matchMedia("(pointer: fine)").matches);
-  }, [reduce]);
 
   useEffect(() => {
     if (!enabled) return;

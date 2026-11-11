@@ -46,6 +46,15 @@
     outline-color: #efede6;
   }
 
+  /* First-visit cover painted before hydration (see introPendingScript); the Intro overlay replaces it. */
+  html.intro-pending::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 69;
+    background: #0e0e0c;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;

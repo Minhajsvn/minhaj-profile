@@ -64,16 +64,16 @@ export function TopBar() {
   return (
     <header
       ref={ref}
-      className={`label fixed inset-x-0 top-0 z-50 grid grid-cols-3 items-center gap-4 px-4 py-4 transition-colors duration-300 md:px-6 ${
+      className={`label fixed inset-x-0 top-0 z-50 grid grid-cols-[auto_1fr_auto] items-center gap-3 px-4 py-2.5 transition-colors duration-300 md:px-6 ${
         ink ? "bg-ink text-paper" : "bg-paper text-ink"
       }`}
     >
       <Link href="/" data-transition-label="Home" className="justify-self-start">
         MINHAJ©26
       </Link>
-      <nav aria-label="Site" className="flex justify-center gap-3 md:gap-5">
+      <nav aria-label="Site" className="flex justify-center gap-2.5 md:gap-5">
         {links.map((l) => (
-          <Link key={l.href} href={l.href} data-transition-label={l.label} className="underline-offset-4 hover:underline">
+          <Link key={l.href} href={l.href} data-transition-label={l.label} className="inline-flex min-h-6 items-center py-1 underline-offset-4 hover:underline">
             {l.label}
           </Link>
         ))}

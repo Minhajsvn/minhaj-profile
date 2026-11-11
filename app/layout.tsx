@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { introPendingScript } from "@/lib/intro";
 import { Providers } from "@/components/Providers";
 import { profile } from "@/lib/data";
 import "lenis/dist/lenis.css";
@@ -35,7 +36,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+    // The inline script may add "intro-pending" before hydration; that is expected.
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introPendingScript }} />
+      </head>
       <body>
         <a
           href="#main"

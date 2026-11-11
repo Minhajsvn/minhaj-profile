@@ -1,6 +1,14 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { formatDubaiTime, indexNumber, projectYearLabel } from "./format.ts";
+import { formatDubaiTime, indexNumber, msToNextMinute, projectYearLabel } from "./format.ts";
+
+test("msToNextMinute counts to the next minute boundary", () => {
+  assert.equal(msToNextMinute(new Date("2026-11-11T10:02:45.500Z")), 14_500);
+});
+
+test("msToNextMinute gives a full minute exactly on a boundary", () => {
+  assert.equal(msToNextMinute(new Date("2026-11-11T10:02:00.000Z")), 60_000);
+});
 
 test("formatDubaiTime shifts UTC to Dubai (UTC+4)", () => {
   assert.equal(formatDubaiTime(new Date("2026-11-11T10:02:00Z")), "14:02");

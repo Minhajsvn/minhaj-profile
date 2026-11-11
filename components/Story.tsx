@@ -16,9 +16,9 @@ export function Story() {
 
       <dl className="gutter grid-12 mt-14 gap-y-8 md:mt-20">
         {stats.map((s) => (
-          <div key={s.label} className="rule col-span-12 border-t pt-3 sm:col-span-4">
-            <dd className="text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-none tracking-[-0.05em]">{s.value}</dd>
+          <div key={s.label} className="rule col-span-12 flex flex-col-reverse border-t pt-3 sm:col-span-4">
             <dt className="label muted mt-2">{s.label}</dt>
+            <dd className="text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-none tracking-[-0.05em]">{s.value}</dd>
           </div>
         ))}
       </dl>
