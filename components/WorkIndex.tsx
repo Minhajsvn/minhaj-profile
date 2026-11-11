@@ -24,9 +24,8 @@ export function WorkIndex({ items, tone }: { items: Project[]; tone: Tone }) {
             <Link
               href={`/work/${p.slug}`}
               data-transition-label={p.title}
+              // Pointer only: the preview follows the mouse, so keyboard focus would park it in a corner.
               onPointerEnter={(e) => e.pointerType === "mouse" && setActive(p)}
-              onFocus={() => setActive(p)}
-              onBlur={() => setActive(null)}
               className={`gutter grid-12 items-baseline gap-y-1 py-5 transition-colors duration-200 md:py-7 ${hover[tone]}`}
             >
               <span className="label col-span-2 md:col-span-1">{indexNumber(i)}</span>

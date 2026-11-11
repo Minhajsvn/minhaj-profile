@@ -33,10 +33,17 @@
     @apply bg-lime text-ink;
   }
 
-  /* currentColor keeps the ring visible on both ink and paper (lime would fail contrast on paper) */
+  /* The ring sits outside the element on the section's own background, so colour it against the section,
+     not the element: ink on paper sections, paper on ink. Works for inverted fills and the lime band too. */
   :focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;
+  }
+  [data-tone="paper"] :focus-visible {
+    outline-color: #0e0e0c;
+  }
+  [data-tone="ink"] :focus-visible {
+    outline-color: #efede6;
   }
 
   @media (prefers-reduced-motion: reduce) {
