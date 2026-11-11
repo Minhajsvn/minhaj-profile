@@ -1,34 +1,45 @@
+import { Fragment } from "react";
 import { clients } from "@/lib/data";
+import { Section } from "./Section";
 
-/** Wordmark strip of client names. Scrolls gently; static and wrapped when motion is reduced. */
+const line = "text-[clamp(2rem,6vw,5rem)] font-medium leading-none tracking-[-0.04em]";
+
+function Names({ hidden = false }: { hidden?: boolean }) {
+  return (
+    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center">
+      {clients.map((c) => (
+        <Fragment key={c}>
+          <li className="whitespace-nowrap">{c}</li>
+          <li aria-hidden className="muted px-[0.4em]">
+            /
+          </li>
+        </Fragment>
+      ))}
+    </ul>
+  );
+}
+
+/** One slow line of client names. Static and wrapped when motion is reduced. */
 export function Clients() {
   return (
-    <section aria-labelledby="clients-title" className="panel py-10 sm:py-14">
-      <h2 id="clients-title" className="eyebrow w-full justify-center px-4 text-center font-sans">
-        Trusted by jewellers, refineries &amp; brands across the UAE
+    <Section tone="paper" labelledBy="clients-title" className="rule border-t py-12 md:py-16">
+      <h2 id="clients-title" className="label muted gutter mb-6">
+        Trusted by jewellers, refineries and brands across the UAE
       </h2>
 
-      <div className="group relative mt-8 overflow-hidden motion-reduce:hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
-        <ul className="flex w-max animate-marquee items-center gap-12 pr-12 group-hover:[animation-play-state:paused] sm:gap-16 sm:pr-16">
-          {[...clients, ...clients].map((c, i) => (
-            <li
-              key={i}
-              aria-hidden={i >= clients.length}
-              className="whitespace-nowrap font-display text-xl text-muted sm:text-2xl"
-            >
-              {c}
-            </li>
-          ))}
-        </ul>
+      <div className={`flex w-max animate-marquee motion-reduce:hidden ${line}`}>
+        <Names />
+        <Names hidden />
       </div>
 
-      <ul className="mt-8 hidden flex-wrap justify-center gap-x-8 gap-y-3 px-6 motion-reduce:flex">
-        {clients.map((c) => (
-          <li key={c} className="font-display text-lg text-muted">
+      <ul className={`gutter hidden flex-wrap gap-x-[0.4em] gap-y-2 motion-reduce:flex ${line}`}>
+        {clients.map((c, i) => (
+          <li key={c}>
             {c}
+            {i < clients.length - 1 && <span className="muted"> /</span>}
           </li>
         ))}
       </ul>
-    </section>
+    </Section>
   );
 }

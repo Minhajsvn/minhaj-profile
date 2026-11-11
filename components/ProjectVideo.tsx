@@ -75,7 +75,7 @@ export function ProjectVideo({
         type="button"
         onClick={() => setUserPaused(!paused)}
         aria-label={paused ? `Play ${label}` : `Pause ${label}`}
-        className="absolute bottom-3 right-3 grid h-11 w-11 place-items-center rounded-full bg-[#002E23]/80 text-[#F2EEE9] backdrop-blur transition-colors hover:bg-[#002E23]"
+        className="absolute bottom-3 right-3 grid h-11 w-11 place-items-center bg-ink/80 text-paper backdrop-blur transition-colors hover:bg-ink"
       >
         {paused ? <Play /> : <Pause />}
       </button>

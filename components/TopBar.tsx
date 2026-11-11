@@ -60,7 +60,7 @@ export function TopBar() {
     <header
       ref={ref}
       className={`label fixed inset-x-0 top-0 z-50 grid grid-cols-3 items-center gap-4 px-4 py-4 transition-colors duration-300 md:px-6 ${
-        ink ? "text-paper" : "text-ink"
+        ink ? "bg-ink text-paper" : "bg-paper text-ink"
       }`}
     >
       <Link href="/" data-transition-label="Home" className="justify-self-start">
