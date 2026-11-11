@@ -101,4 +101,37 @@
   .panel {
     @apply rounded-panel border border-border/70 bg-surface;
   }
+
+  /* —— Editorial Mono —— */
+  .text-hero,
+  .text-title,
+  .text-year {
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 0.85;
+  }
+  .text-hero {
+    font-size: clamp(6rem, 24vw, 22rem);
+  }
+  .text-title {
+    font-size: clamp(3rem, 10vw, 9rem);
+  }
+  .text-year {
+    font-size: clamp(4rem, 12vw, 10rem);
+  }
+  .label {
+    @apply font-mono text-xs uppercase tracking-[0.04em];
+  }
+  .muted {
+    color: color-mix(in srgb, currentColor 55%, transparent);
+  }
+  .rule {
+    border-color: color-mix(in srgb, currentColor 15%, transparent);
+  }
+  .grid-12 {
+    @apply grid grid-cols-12 gap-x-4 md:gap-x-6;
+  }
+  .gutter {
+    @apply px-4 md:px-6;
+  }
 }

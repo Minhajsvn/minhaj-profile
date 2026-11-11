@@ -29,12 +29,16 @@ const config: Config = {
           DEFAULT: token("tag-bg"),
           foreground: token("tag-fg"),
         },
+        ink: "#0E0E0C",
+        paper: "#EFEDE6",
+        lime: "#C6F432",
         pine: "#0F4A3A",
         sage: "#8FA89A",
       },
       fontFamily: {
         display: ["var(--font-sans)", "system-ui", "sans-serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       borderRadius: {
         panel: "clamp(1.75rem, 4vw, 3rem)",

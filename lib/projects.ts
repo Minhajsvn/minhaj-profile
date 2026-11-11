@@ -33,6 +33,8 @@ export type Project = {
   /** Path under /public to a short muted screen recording of the live site. */
   video?: string;
   featured?: boolean;
+  /** Shown in work index rows; falls back to the category label. */
+  year?: string;
   caseStudy?: CaseStudy;
 };
 
