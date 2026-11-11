@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useSafeReducedMotion } from "./useSafeReducedMotion";
 
 const tags = { article: motion.article, div: motion.div } as const;
 
@@ -19,7 +20,7 @@ export function ScrollScale({
   from?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.3"] });
   const scale = useTransform(scrollYProgress, [0, 1], [from, 1]);
   const opacity = useTransform(scrollYProgress, [0, 0.4], [0.4, 1]);

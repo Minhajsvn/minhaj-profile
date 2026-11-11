@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useSafeReducedMotion } from "./motion/useSafeReducedMotion";
 import { Pause, Play } from "./Icons";
 
 /**
@@ -27,7 +27,7 @@ export function ProjectVideo({
   className?: string;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const [inView, setInView] = useState(false);
   const [userPaused, setUserPaused] = useState<boolean | null>(null);
   const controlled = playing !== undefined;
