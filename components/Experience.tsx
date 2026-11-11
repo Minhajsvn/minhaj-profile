@@ -1,25 +1,46 @@
 import { education, experience, skills } from "@/lib/data";
 import { Reveal } from "./Reveal";
-import { SplitReveal } from "./motion/SplitReveal";
+import { Section } from "./Section";
 
+/** Experience as ruled rows, then education and toolkit as mono lists. */
 export function Experience() {
   return (
-    <section aria-labelledby="experience-title" className="px-4 pb-20 sm:px-8 sm:pb-28">
-      <div className="mx-auto grid max-w-5xl gap-14 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
-        <Reveal>
-          <p className="eyebrow">Experience</p>
-          <SplitReveal
-            id="experience-title"
-            parts={[{ text: "Where I’ve been" }, { text: "building.", soft: true }]}
-            className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl"
-          />
+    <Section tone="paper" labelledBy="experience-title" className="pb-20 md:pb-28">
+      <div className="rule gutter border-t pt-16 md:pt-20">
+        <h2 id="experience-title" className="text-title">
+          Experience
+        </h2>
+      </div>
 
-          <h3 className="mt-12 font-sans text-sm font-semibold tracking-normal">Education</h3>
+      <ol className="rule mt-10 border-b md:mt-14">
+        {experience.map((job) => (
+          <Reveal as="li" key={job.company} className="rule gutter grid-12 gap-y-3 border-t py-8 md:py-10">
+            <p className="label muted col-span-12 md:col-span-3">{job.period}</p>
+            <div className="col-span-12 md:col-span-4">
+              <h3 className="text-2xl font-medium tracking-[-0.03em] md:text-3xl">{job.company}</h3>
+              <p className="muted mt-1 text-sm">
+                {job.role} · {job.place}
+              </p>
+            </div>
+            <ul className="col-span-12 space-y-2 md:col-span-5">
+              {job.points.map((pt) => (
+                <li key={pt} className="max-w-[60ch] text-pretty leading-relaxed">
+                  {pt}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        ))}
+      </ol>
+
+      <div className="gutter grid-12 mt-16 gap-y-12 md:mt-24">
+        <Reveal className="col-span-12 md:col-span-4">
+          <h3 className="label muted">Education</h3>
           <ul className="mt-4 space-y-4">
             {education.map((e) => (
-              <li key={e.title} className="text-sm">
+              <li key={e.title} className="rule border-t pt-3">
                 <p className="font-medium">{e.title}</p>
-                <p className="text-muted">
+                <p className="muted text-sm">
                   {e.org}
                   {e.period && ` · ${e.period}`}
                 </p>
@@ -28,45 +49,18 @@ export function Experience() {
           </ul>
         </Reveal>
 
-        <ol className="relative border-l border-border">
-          {experience.map((job, i) => (
-            <Reveal as="li" key={job.company} delay={i * 0.08} className="relative pb-12 pl-8 last:pb-0">
-              <span aria-hidden className="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full bg-accent ring-4 ring-background" />
-              <p className="text-xs font-medium uppercase tracking-wider text-muted">{job.period}</p>
-              <h3 className="mt-2 text-xl font-medium sm:text-2xl">{job.company}</h3>
-              <p className="mt-1 text-sm text-muted">
-                {job.role} · {job.place}
-              </p>
-              <ul className="mt-4 space-y-2.5">
-                {job.points.map((pt) => (
-                  <li key={pt} className="flex gap-3 text-sm leading-relaxed">
-                    <span aria-hidden className="mt-2 h-1 w-3 shrink-0 rounded-full bg-sage" />
-                    {pt}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          ))}
-        </ol>
+        <Reveal className="col-span-12 md:col-span-7 md:col-start-6">
+          <h3 className="label muted">Toolkit</h3>
+          <dl className="mt-4 grid gap-x-6 gap-y-6 sm:grid-cols-2">
+            {skills.map((s) => (
+              <div key={s.group} className="rule border-t pt-3">
+                <dt className="font-medium">{s.group}</dt>
+                <dd className="label mt-2 leading-relaxed">{s.items.join(" · ")}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
       </div>
-
-      <Reveal className="mx-auto mt-20 max-w-5xl">
-        <h3 className="font-sans text-sm font-semibold tracking-normal">Toolkit</h3>
-        <dl className="mt-6 grid gap-x-10 gap-y-8 sm:grid-cols-2">
-          {skills.map((s) => (
-            <div key={s.group} className="border-t border-border pt-5">
-              <dt className="text-xs font-medium uppercase tracking-wider text-muted">{s.group}</dt>
-              <dd className="mt-3 flex flex-wrap gap-1.5">
-                {s.items.map((it) => (
-                  <span key={it} className="chip">
-                    {it}
-                  </span>
-                ))}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </Reveal>
-    </section>
+    </Section>
   );
 }
