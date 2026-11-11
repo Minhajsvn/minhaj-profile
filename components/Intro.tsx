@@ -28,6 +28,7 @@ export function Intro() {
   const reduce = useReducedMotion();
   const [show, setShow] = useState(false);
   const [count, setCount] = useState(0);
+  const [gone, setGone] = useState(false);
 
   useEffect(() => {
     if (reduce || seen()) return;
@@ -41,14 +42,20 @@ export function Intro() {
       else setShow(false);
     });
     const skip = () => setShow(false);
+    // rAF pauses in hidden or throttled tabs, and the exit animation needs rAF too.
+    // A plain timer removes the overlay outright, so it can never block the page.
+    const failsafe = setTimeout(() => setGone(true), DURATION + 800);
     window.addEventListener("pointerdown", skip);
     window.addEventListener("keydown", skip);
     return () => {
       cancelAnimationFrame(frame);
+      clearTimeout(failsafe);
       window.removeEventListener("pointerdown", skip);
       window.removeEventListener("keydown", skip);
     };
   }, [reduce]);
+
+  if (gone) return null;
 
   return (
     <AnimatePresence>
