@@ -82,7 +82,7 @@ export function PageTransition() {
         if (def === "cover") go();
         if (def === "reveal") setPhase("idle");
       }}
-      className="pointer-events-none fixed inset-0 z-[70] grid place-items-center bg-primary text-primary-foreground"
+      className="pointer-events-none fixed inset-0 z-[70] grid place-items-center bg-ink text-paper"
     >
       <div className="overflow-hidden px-6 pb-[0.15em] text-center">
         <motion.p
@@ -91,7 +91,7 @@ export function PageTransition() {
         >
           {label || (
             <span className="inline-flex items-center gap-3">
-              <span className="h-3 w-3 rounded-full bg-accent" /> MM
+              <span className="h-3 w-3 rounded-full bg-lime" /> MM
             </span>
           )}
         </motion.p>

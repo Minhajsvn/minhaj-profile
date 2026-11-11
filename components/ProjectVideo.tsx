@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useSafeReducedMotion } from "./motion/useSafeReducedMotion";
 import { Pause, Play } from "./Icons";
 
 /**
@@ -27,7 +27,7 @@ export function ProjectVideo({
   className?: string;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const [inView, setInView] = useState(false);
   const [userPaused, setUserPaused] = useState<boolean | null>(null);
   const controlled = playing !== undefined;
@@ -75,7 +75,7 @@ export function ProjectVideo({
         type="button"
         onClick={() => setUserPaused(!paused)}
         aria-label={paused ? `Play ${label}` : `Pause ${label}`}
-        className="absolute bottom-3 right-3 grid h-11 w-11 place-items-center rounded-full bg-[#002E23]/80 text-[#F2EEE9] backdrop-blur transition-colors hover:bg-[#002E23]"
+        className="absolute bottom-3 right-3 grid h-11 w-11 place-items-center bg-ink/80 text-paper backdrop-blur transition-colors hover:bg-ink"
       >
         {paused ? <Play /> : <Pause />}
       </button>

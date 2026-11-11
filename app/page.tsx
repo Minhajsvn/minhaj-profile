@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Clients } from "@/components/Clients";
 import { Contact } from "@/components/Contact";
 import { Hero } from "@/components/Hero";
@@ -19,17 +20,30 @@ const jsonLd = {
 
 export default function Home() {
   return (
-    <div className="mx-auto w-full max-w-[1280px] p-2 sm:p-4 lg:p-6">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <main id="main" className="flex flex-col gap-2 sm:gap-3">
-        <Hero />
+      <main id="main" className="flex flex-col">
+        {/* Suspense boundaries let React 19 hydrate each section as its own task instead of one long one. */}
+        <Suspense>
+          <Hero />
+        </Suspense>
         <Clients />
-        <Showreel />
-        <Work />
-        <Story />
-        <Services />
-        <Contact />
+        <Suspense>
+          <Showreel />
+        </Suspense>
+        <Suspense>
+          <Work />
+        </Suspense>
+        <Suspense>
+          <Story />
+        </Suspense>
+        <Suspense>
+          <Services />
+        </Suspense>
+        <Suspense>
+          <Contact />
+        </Suspense>
       </main>
-    </div>
+    </>
   );
 }

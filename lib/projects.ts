@@ -11,6 +11,8 @@ export const categories: { id: Category | "all"; label: string }[] = [
 export type Highlight = string | { text: string; sub: string[] };
 
 export type CaseStudy = {
+  /** Section headings, written per project. */
+  titles: { problem: string; solution: string; architecture: string; engineering: string };
   problem: string;
   solution: string;
   architecture: { part: string; stack: string; does: string }[];
@@ -33,6 +35,8 @@ export type Project = {
   /** Path under /public to a short muted screen recording of the live site. */
   video?: string;
   featured?: boolean;
+  /** Shown in work index rows; falls back to the category label. */
+  year?: string;
   caseStudy?: CaseStudy;
 };
 
@@ -55,6 +59,12 @@ export const projects: Project[] = [
       "AES-256-GCM token encryption, GDPR webhooks, minute-by-minute alerts and nightly backups.",
     ],
     caseStudy: {
+      titles: {
+        problem: "Prices that drift from the market",
+        solution: "The catalog follows the market",
+        architecture: "A monorepo in four parts",
+        engineering: "Built to be safe in production",
+      },
       problem:
         "Jewellery stores in the UAE have to reprice their whole catalog every time gold and silver move. Gold jewellery follows the daily Dubai Jewellery Group (DJG) retail rate per karat; bullion and silver follow the live international market. On non-Plus Shopify plans checkout always charges the catalog price — so if the storefront shows one price and the catalog holds another, customers are charged the wrong amount.",
       solution:

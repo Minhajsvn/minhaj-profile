@@ -2,20 +2,9 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { profile, stats } from "@/lib/data";
-import { ArrowDown } from "./Icons";
-import { Magnetic } from "./motion/Magnetic";
-import { SplitReveal, type Part } from "./motion/SplitReveal";
-import { TopBar } from "./TopBar";
-
-// Alternate weights of ink, like the reference headline.
-const headline: Part[] = [
-  { text: "Building" },
-  { text: "Shopify stores,", soft: true },
-  { text: "real-time apps," },
-  { text: "and fast", soft: true },
-  { text: "web experiences." },
-];
+import { profile } from "@/lib/data";
+import { SplitReveal } from "./motion/SplitReveal";
+import { Section } from "./Section";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -25,90 +14,58 @@ const fadeUp = (delay: number) => ({
   transition: { duration: 0.7, delay, ease },
 });
 
+const meta = [
+  { k: "Role", v: profile.role },
+  { k: "Based", v: profile.location },
+  { k: "Index", v: "© 2026" },
+  { k: "Status", v: "Open to projects" },
+];
+
 export function Hero() {
   return (
-    <section aria-labelledby="hero-title" className="panel overflow-hidden bg-background px-4 pb-14 sm:px-8 sm:pb-20">
-      <TopBar />
+    <Section tone="paper" labelledBy="hero-title" className="flex min-h-[100svh] flex-col pt-20">
+      <div className="gutter grid-12 gap-y-8">
+        <motion.dl {...fadeUp(0.1)} className="col-span-12 grid grid-cols-2 gap-x-4 gap-y-4 md:col-span-8 md:grid-cols-4">
+          {meta.map((m) => (
+            <div key={m.k} className="rule border-t pt-2">
+              <dt className="label muted">{m.k}</dt>
+              <dd className="mt-1 text-sm font-medium">{m.v}</dd>
+            </div>
+          ))}
+        </motion.dl>
 
-      <div className="mx-auto flex max-w-3xl flex-col items-center pt-10 text-center sm:pt-16">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, ease }}
-          className="relative"
-        >
-          <div className="relative h-24 w-24 sm:h-28 sm:w-28">
+        {/* No fade: the portrait is the LCP element and must paint before hydration. */}
+        <div className="col-span-5 md:col-span-3 md:col-start-10 md:row-span-2">
+          <div className="group relative aspect-[4/5] w-full overflow-hidden">
             <Image
               src={profile.avatar}
               alt={profile.avatarAlt}
               fill
               priority
-              sizes="112px"
-              className="rounded-full object-cover object-[50%_40%] ring-4 ring-surface"
+              sizes="(min-width: 768px) 25vw, 40vw"
+              className="object-cover object-[50%_35%] grayscale transition-[filter] duration-500 group-hover:grayscale-0"
             />
-            <span aria-hidden className="absolute -right-0.5 top-2 h-3 w-3 rounded-full bg-accent ring-4 ring-background" />
           </div>
-          <motion.span
-            initial={{ opacity: 0, rotate: 0, x: -8 }}
-            animate={{ opacity: 1, rotate: -8, x: 0 }}
-            transition={{ type: "spring", stiffness: 260, damping: 14, delay: 0.5 }}
-            className="absolute left-[60%] top-[72%] whitespace-nowrap rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-foreground shadow-sm sm:left-[78%] sm:top-[68%]"
-          >
-            <span className="sm:hidden">{profile.firstName}</span>
-            <span className="hidden sm:inline">{profile.name}</span> <span aria-hidden>👋</span>
-          </motion.span>
-        </motion.div>
+        </div>
 
         <motion.p
-          {...fadeUp(0.15)}
-          className="mt-10 text-balance text-xs font-medium uppercase tracking-[0.14em] text-muted sm:tracking-[0.18em]"
+          {...fadeUp(0.35)}
+          className="col-span-7 self-end text-pretty text-lg leading-snug md:col-span-6 md:text-2xl"
         >
-          <span aria-hidden className="mr-2 inline-block h-1.5 w-1.5 -translate-y-px rounded-full bg-accent align-middle" />
-          {profile.role} · {profile.location}
+          Shopify stores, Next.js sites and real-time apps for GCC brands.
         </motion.p>
+      </div>
 
+      <div className="mt-auto overflow-hidden">
         <SplitReveal
           as="h1"
           id="hero-title"
           immediate
-          delay={0.2}
-          parts={headline}
-          className="mt-5 text-balance text-[2.25rem] font-semibold leading-[1.1] sm:text-5xl md:text-[3.75rem]"
+          delay={0.15}
+          parts={[{ text: "MINHAJ" }]}
+          className="text-hero -mb-[0.14em] whitespace-nowrap pl-[0.02em] pt-8"
         />
-
-        <motion.p
-          {...fadeUp(0.75)}
-          className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted sm:text-lg"
-        >
-          I build Shopify stores and apps, Next.js websites and Node.js backends for jewellery, bullion and real
-          estate brands across the UAE and GCC.
-        </motion.p>
-
-        <motion.div {...fadeUp(0.9)} className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <Magnetic>
-            <a href="#work" className="btn-primary px-6">
-              Selected work <ArrowDown />
-            </a>
-          </Magnetic>
-          <Magnetic>
-            <a href="#contact" className="btn-ghost px-6">
-              Get in touch
-            </a>
-          </Magnetic>
-        </motion.div>
-
-        <motion.dl
-          {...fadeUp(1.05)}
-          className="mt-14 grid w-full max-w-xl grid-cols-3 gap-2 border-t border-border pt-8"
-        >
-          {stats.map((s) => (
-            <div key={s.label} className="flex flex-col-reverse items-center gap-1">
-              <dt className="text-xs leading-snug text-muted sm:text-sm">{s.label}</dt>
-              <dd className="text-2xl font-semibold tracking-tight sm:text-3xl">{s.value}</dd>
-            </div>
-          ))}
-        </motion.dl>
       </div>
-    </section>
+    </Section>
   );
 }

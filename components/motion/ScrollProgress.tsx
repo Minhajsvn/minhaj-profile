@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useSpring } from "framer-motion";
 
-/** Hairline gold progress bar pinned to the top of the viewport. Decorative only. */
+/** Hairline progress bar pinned above the top bar; difference blend keeps it visible on ink and paper. Decorative only. */
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.3 });
@@ -10,7 +10,7 @@ export function ScrollProgress() {
     <motion.div
       aria-hidden
       style={{ scaleX }}
-      className="pointer-events-none fixed inset-x-0 top-0 z-50 h-[2px] origin-left bg-accent"
+      className="pointer-events-none fixed inset-x-0 top-0 z-[55] h-[2px] origin-left bg-paper mix-blend-difference"
     />
   );
 }

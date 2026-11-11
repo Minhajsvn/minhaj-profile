@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "moodboard",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5055", "--directory", "design-research"],
+      "port": 5055
     }
   ]
 }

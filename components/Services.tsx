@@ -1,40 +1,31 @@
 import { services } from "@/lib/data";
-import { ServiceGlyph } from "./Icons";
+import { indexNumber } from "@/lib/format";
 import { Reveal } from "./Reveal";
 import { SplitReveal } from "./motion/SplitReveal";
+import { Section } from "./Section";
 
-export function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative flex items-center justify-center" aria-hidden>
-      <span className="absolute inset-x-0 top-1/2 h-px bg-border" />
-      <span className="relative -rotate-3 rounded-full border border-border bg-surface px-4 py-1.5 text-xs font-medium text-foreground shadow-sm">
-        {children}
-      </span>
-    </div>
-  );
-}
-
+/** Numbered service rows: title left, detail right. */
 export function Services() {
   return (
-    <section aria-labelledby="services-title" className="px-4 py-20 sm:px-8 sm:py-28">
-      <SplitReveal
-        id="services-title"
-        parts={[{ text: "Partnering with brands and agencies" }, { text: "to ship work that performs.", soft: true }]}
-        className="mx-auto max-w-2xl text-balance text-center text-3xl font-semibold leading-tight sm:text-[2.6rem]"
-      />
-
-      <div className="mx-auto mt-14 max-w-5xl">
-        <SectionLabel>Services</SectionLabel>
-        <ul className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {services.map((s, i) => (
-            <Reveal as="li" key={s.title} delay={i * 0.08}>
-              <ServiceGlyph name={s.icon} className="text-sage" />
-              <h3 className="mt-5 font-sans text-base font-semibold tracking-normal">{s.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{s.body}</p>
-            </Reveal>
-          ))}
-        </ul>
+    <Section tone="paper" labelledBy="services-title" className="pb-20 md:pb-28">
+      <div className="gutter grid-12 rule gap-y-6 border-t pt-20 md:pt-28">
+        <SplitReveal id="services-title" parts={[{ text: "Services" }]} className="text-title col-span-12 md:col-span-7" />
+        <p className="label muted col-span-12 self-end md:col-span-4 md:col-start-9">
+          Partnering with brands and agencies to ship work that performs
+        </p>
       </div>
-    </section>
+
+      <ol className="rule mt-12 border-b md:mt-16">
+        {services.map((s, i) => (
+          <Reveal as="li" key={s.title} className="rule gutter grid-12 gap-y-2 border-t py-6 md:py-8">
+            <span className="label col-span-2 md:col-span-1">{indexNumber(i)}</span>
+            <h3 className="col-span-10 text-2xl font-medium tracking-[-0.03em] md:col-span-4 md:text-3xl">{s.title}</h3>
+            <p className="col-span-10 col-start-3 max-w-[60ch] text-pretty leading-relaxed md:col-span-5 md:col-start-7">
+              {s.body}
+            </p>
+          </Reveal>
+        ))}
+      </ol>
+    </Section>
   );
 }
