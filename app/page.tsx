@@ -19,9 +19,9 @@ const jsonLd = {
 
 export default function Home() {
   return (
-    <div className="mx-auto w-full max-w-[1280px] p-2 sm:p-4 lg:p-6">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <main id="main" className="flex flex-col gap-2 sm:gap-3">
+      <main id="main" className="flex flex-col">
         <Hero />
         <Clients />
         <Showreel />
@@ -30,6 +30,6 @@ export default function Home() {
         <Services />
         <Contact />
       </main>
-    </div>
+    </>
   );
 }

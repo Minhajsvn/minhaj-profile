@@ -6,6 +6,7 @@ import { PageTransition } from "./motion/PageTransition";
 import { ScrollProgress } from "./motion/ScrollProgress";
 import { SmoothScroll } from "./motion/SmoothScroll";
 import { Cursor } from "./Cursor";
+import { Intro } from "./Intro";
 import { TopBar } from "./TopBar";
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -18,6 +19,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <PageTransition />
         <TopBar />
         <Cursor />
+        <Intro />
         {children}
       </MotionConfig>
     </ThemeProvider>
