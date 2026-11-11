@@ -2,15 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Contact } from "@/components/Contact";
-import { ArrowLeft, ArrowUpRight } from "@/components/Icons";
 import { ScrollScale } from "@/components/motion/ScrollScale";
 import { ProjectCover } from "@/components/ProjectCover";
 import { ProjectVideo } from "@/components/ProjectVideo";
 import { Reveal } from "@/components/Reveal";
-import { Tags } from "@/components/Tags";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { SocialLinks } from "@/components/TopBar";
+import { Section } from "@/components/Section";
 import { profile } from "@/lib/data";
+import { indexNumber } from "@/lib/format";
 import { categories, getProject, projects, type CaseStudy, type Highlight } from "@/lib/projects";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -29,26 +27,33 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-function Bullet() {
-  return <span aria-hidden className="mt-2.5 h-1 w-3 shrink-0 rounded-full bg-sage" />;
+/** Numbered block heading on the 12-col grid. */
+function Block({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
+  return (
+    <Reveal className="rule gutter grid-12 gap-y-6 border-t py-12 md:py-16">
+      <div className="col-span-12 md:col-span-4">
+        <p className="label muted">{n}</p>
+        <h2 className="mt-2 text-3xl font-medium tracking-[-0.03em] md:text-4xl">{title}</h2>
+      </div>
+      <div className="col-span-12 md:col-span-7 md:col-start-6">{children}</div>
+    </Reveal>
+  );
 }
 
 function HighlightList({ items }: { items: Highlight[] }) {
   return (
-    <ul className="space-y-4">
-      {items.map((h) => {
+    <ol className="rule border-b">
+      {items.map((h, i) => {
         const text = typeof h === "string" ? h : h.text;
         return (
-          <li key={text} className="flex gap-3 leading-relaxed">
-            <Bullet />
+          <li key={text} className="rule grid grid-cols-[2.5rem_1fr] border-t py-4 leading-relaxed">
+            <span className="label muted pt-1">{indexNumber(i)}</span>
             <div>
               {text}
               {typeof h !== "string" && (
-                <ul className="mt-3 flex flex-wrap gap-1.5">
+                <ul className="label muted mt-2 flex flex-wrap gap-x-4 gap-y-1">
                   {h.sub.map((s) => (
-                    <li key={s} className="rounded-full border border-border px-3 py-1 text-sm text-muted">
-                      {s}
-                    </li>
+                    <li key={s}>{s}</li>
                   ))}
                 </ul>
               )}
@@ -56,84 +61,88 @@ function HighlightList({ items }: { items: Highlight[] }) {
           </li>
         );
       })}
-    </ul>
-  );
-}
-
-function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
-  return (
-    <>
-      <p className="eyebrow">{eyebrow}</p>
-      <h2 className="mt-3 text-2xl font-medium sm:text-3xl">{title}</h2>
-    </>
+    </ol>
   );
 }
 
 function CaseStudyBody({ cs }: { cs: CaseStudy }) {
   return (
     <>
-      <div className="grid gap-10 md:grid-cols-2">
-        <Reveal>
-          <SectionHeading eyebrow="01 · The problem" title="Prices that drift from the market" />
-          <p className="mt-5 leading-relaxed text-muted">{cs.problem}</p>
-        </Reveal>
-        <Reveal delay={0.08}>
-          <SectionHeading eyebrow="02 · The solution" title="The catalog follows the market" />
-          <p className="mt-5 leading-relaxed text-muted">{cs.solution}</p>
-        </Reveal>
-      </div>
+      <Reveal className="rule gutter grid-12 gap-y-10 border-t py-12 md:py-16">
+        <div className="col-span-12 md:col-span-5">
+          <p className="label muted">01 · The problem</p>
+          <h2 className="mt-2 text-3xl font-medium tracking-[-0.03em]">Prices that drift from the market</h2>
+          <p className="mt-4 max-w-[60ch] leading-relaxed">{cs.problem}</p>
+        </div>
+        <div className="col-span-12 md:col-span-5 md:col-start-8">
+          <p className="label muted">02 · The solution</p>
+          <h2 className="mt-2 text-3xl font-medium tracking-[-0.03em]">The catalog follows the market</h2>
+          <p className="mt-4 max-w-[60ch] leading-relaxed">{cs.solution}</p>
+        </div>
+      </Reveal>
 
-      <Reveal className="mt-20">
-        <SectionHeading eyebrow="03 · Architecture" title="A monorepo in four parts" />
-        <ol className="mt-8 grid gap-4 sm:grid-cols-2">
-          {cs.architecture.map((a, i) => (
-            <li key={a.part} className="panel rounded-[1.75rem] p-6">
-              <span className="font-display text-sm text-muted">0{i + 1}</span>
-              <h3 className="mt-2 font-sans text-lg font-semibold tracking-normal">{a.part}</h3>
-              <p className="mt-1 text-xs font-medium uppercase tracking-wider text-muted">{a.stack}</p>
-              <p className="mt-4 text-sm leading-relaxed">{a.does}</p>
+      <Block n="03 · Architecture" title="A monorepo in four parts">
+        <table className="w-full text-left text-sm">
+          <thead className="label muted">
+            <tr>
+              <th className="pb-3 pr-4 font-normal">Part</th>
+              <th className="pb-3 pr-4 font-normal">Stack</th>
+              <th className="hidden pb-3 font-normal md:table-cell">Does</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cs.architecture.map((a) => (
+              <tr key={a.part} className="rule border-t align-top">
+                <td className="py-4 pr-4 font-medium">{a.part}</td>
+                <td className="label py-4 pr-4">{a.stack}</td>
+                <td className="hidden py-4 leading-relaxed md:table-cell">{a.does}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <ul className="mt-2 space-y-3 text-sm leading-relaxed md:hidden">
+          {cs.architecture.map((a) => (
+            <li key={a.part}>
+              <span className="font-medium">{a.part}:</span> {a.does}
+            </li>
+          ))}
+        </ul>
+      </Block>
+
+      <Block n="04 · Key engineering" title="Built to be safe in production">
+        <ol className="rule border-b">
+          {cs.engineering.map((e, i) => (
+            <li key={e.title} className="rule grid grid-cols-[2.5rem_1fr] border-t py-4">
+              <span className="label muted pt-1">{indexNumber(i)}</span>
+              <div>
+                <h3 className="font-medium">{e.title}</h3>
+                <p className="mt-1 text-sm leading-relaxed">{e.body}</p>
+              </div>
             </li>
           ))}
         </ol>
-      </Reveal>
+      </Block>
 
-      <Reveal className="mt-20">
-        <SectionHeading eyebrow="04 · Key engineering" title="Built to be safe in production" />
-        <dl className="mt-8 grid gap-x-10 gap-y-8 md:grid-cols-2">
-          {cs.engineering.map((e) => (
-            <div key={e.title} className="border-t border-border pt-5">
-              <dt className="font-sans font-semibold">{e.title}</dt>
-              <dd className="mt-2 text-sm leading-relaxed text-muted">{e.body}</dd>
-            </div>
-          ))}
-        </dl>
-      </Reveal>
-
-      <Reveal className="mt-20">
-        <SectionHeading eyebrow="05 · By the numbers" title="From the repository" />
-        <dl className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-border bg-border md:grid-cols-4">
+      <Section tone="ink" className="py-14 md:py-20">
+        <p className="label muted gutter">05 · By the numbers — from the repository</p>
+        <dl className="gutter grid-12 mt-8 gap-y-10">
           {cs.numbers.map((n) => (
-            <div key={n.label} className="flex flex-col-reverse gap-1 bg-surface p-5 sm:p-6">
-              <dt className="text-xs uppercase tracking-wider text-muted">{n.label}</dt>
-              <dd className="font-display text-3xl font-medium sm:text-4xl">{n.value}</dd>
+            <div key={n.label} className="col-span-6 md:col-span-3">
+              <dd className="inline-block border-b-2 border-lime pb-1 text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-none tracking-[-0.05em]">
+                {n.value}
+              </dd>
+              <dt className="label muted mt-3">{n.label}</dt>
             </div>
           ))}
         </dl>
-        <ol className="mt-8 flex flex-wrap items-center gap-2 text-sm" aria-label="Delivery phases">
+        <ol aria-label="Delivery phases" className="label gutter mt-12 flex flex-wrap gap-x-6 gap-y-2">
           {cs.phases.map((ph, i) => (
-            <li key={ph} className="flex items-center gap-2">
-              <span className="rounded-full bg-tag px-3 py-1.5 font-medium text-tag-foreground">
-                {i + 1}. {ph}
-              </span>
-              {i < cs.phases.length - 1 && (
-                <span aria-hidden className="text-sage">
-                  →
-                </span>
-              )}
+            <li key={ph}>
+              <span className="muted">{indexNumber(i)}</span> {ph}
             </li>
           ))}
         </ol>
-      </Reveal>
+      </Section>
     </>
   );
 }
@@ -148,40 +157,34 @@ export default async function ProjectPage({ params }: Params) {
   const category = categories.find((c) => c.id === project.category)?.label;
 
   return (
-    <div className="mx-auto w-full max-w-[1280px] p-2 sm:p-4 lg:p-6">
-      <main id="main" className="flex flex-col gap-2 sm:gap-3">
-        <article>
-          <header className="panel bg-background px-4 pb-14 sm:px-8 sm:pb-20">
-            <div className="flex items-center justify-between gap-4 px-1 py-5 sm:px-4">
-              <Link href="/#work" data-transition-label="Selected work" className="btn-ghost px-4">
-                <ArrowLeft /> All work
-              </Link>
-              <nav aria-label="Social" className="flex items-center gap-2">
-                <SocialLinks className="hidden sm:flex" />
-                <ThemeToggle />
-              </nav>
-            </div>
-
-            <Reveal className="mx-auto max-w-3xl pt-10 text-center sm:pt-16">
-              <p className="eyebrow justify-center">
-                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
-                {category}
-              </p>
-              <h1 className="mt-5 text-balance text-4xl font-medium leading-[1.08] sm:text-5xl md:text-6xl">
-                {project.title}
-              </h1>
-              <p className="mt-3 font-display text-lg font-light text-muted sm:text-xl">{project.type}</p>
-              <p className="mx-auto mt-6 max-w-2xl text-pretty leading-relaxed sm:text-lg">{project.summary}</p>
-              {project.meta && <p className="mt-6 text-sm text-muted">{project.meta}</p>}
-              <div className="mt-8 flex justify-center">
-                <div className="max-w-2xl [&_ul]:justify-center">
-                  <Tags items={project.tags} />
-                </div>
+    <main id="main" className="flex flex-col">
+      <article>
+        <Section tone="ink" labelledBy="project-title" className="pb-10 pt-28 md:pt-36">
+          <div className="gutter">
+            <Link href="/work" data-transition-label="All work" className="label muted hover:underline">
+              ← All work
+            </Link>
+            <h1 id="project-title" className="text-title mt-6 text-balance">
+              {project.title}
+            </h1>
+          </div>
+          <dl className="label gutter mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {[
+              ["Type", project.type],
+              ["Category", category],
+              ...(project.year ? [["Year", project.year]] : []),
+              ["Stack", project.tags.slice(0, 4).join(" · ")],
+            ].map(([k, v]) => (
+              <div key={k} className="rule border-t pt-2">
+                <dt className="muted">{k}</dt>
+                <dd className="mt-1 normal-case">{v}</dd>
               </div>
-            </Reveal>
-          </header>
+            ))}
+          </dl>
+        </Section>
 
-          <ScrollScale as="div" className="mx-auto mt-2 max-w-6xl overflow-hidden rounded-panel sm:mt-3">
+        <Section tone="ink">
+          <ScrollScale as="div" from={0.94} className="overflow-hidden">
             {project.video && project.cover ? (
               <div className="aspect-[16/10]">
                 <ProjectVideo src={project.video} poster={project.cover} label={`screen recording of ${project.title}`} />
@@ -190,43 +193,43 @@ export default async function ProjectPage({ params }: Params) {
               <ProjectCover project={project} size="lg" priority />
             )}
           </ScrollScale>
+        </Section>
 
-          <div className="mx-auto max-w-4xl px-4 py-20 sm:px-8 sm:py-28">
-            {project.caseStudy ? (
-              <CaseStudyBody cs={project.caseStudy} />
-            ) : (
-              <Reveal>
-                <SectionHeading eyebrow="What I built" title="Scope & highlights" />
-                <div className="mt-8">
-                  <HighlightList items={project.highlights} />
-                </div>
-              </Reveal>
-            )}
-          </div>
-        </article>
-
-        <nav aria-label="Next project" className="px-4 pb-20 sm:px-8">
-          <Link
-            href={`/work/${next.slug}`}
-            data-transition-label={next.title}
-            className="panel group mx-auto flex max-w-4xl items-center justify-between gap-6 p-6 transition-colors hover:border-sage sm:p-10"
-          >
-            <div>
-              <p className="eyebrow">Next project</p>
-              <p className="mt-2 font-display text-2xl font-medium sm:text-4xl">{next.title}</p>
-              <p className="mt-1 text-sm text-muted">{next.type}</p>
+        <Section tone="paper" className="pt-12 md:pt-16">
+          <div className="gutter grid-12 gap-y-6 pb-12 md:pb-16">
+            <p className="col-span-12 text-pretty text-xl leading-snug md:col-span-7 md:text-2xl">{project.summary}</p>
+            <div className="col-span-12 md:col-span-4 md:col-start-9">
+              {project.meta && <p className="muted text-sm">{project.meta}</p>}
+              <ul aria-label="Technologies" className="label mt-3 flex flex-wrap gap-x-3 gap-y-1">
+                {project.tags.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
             </div>
-            <span
-              aria-hidden
-              className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground transition-transform duration-300 group-hover:rotate-45"
-            >
-              <ArrowUpRight />
-            </span>
+          </div>
+
+          {project.caseStudy ? (
+            <CaseStudyBody cs={project.caseStudy} />
+          ) : (
+            <Block n="What I built" title="Scope and highlights">
+              <HighlightList items={project.highlights} />
+            </Block>
+          )}
+        </Section>
+      </article>
+
+      <Section tone="paper">
+        <nav aria-label="Next project" className="rule border-t">
+          <Link href={`/work/${next.slug}`} data-transition-label={next.title} className="group gutter block py-14 transition-colors hover:bg-ink hover:text-paper md:py-20">
+            <p className="label muted">Next project</p>
+            <p className="text-title mt-4 text-balance">
+              {next.title} <span aria-hidden className="inline-block transition-transform group-hover:translate-x-4">→</span>
+            </p>
           </Link>
         </nav>
+      </Section>
 
-        <Contact />
-      </main>
-    </div>
+      <Contact />
+    </main>
   );
 }

@@ -21,14 +21,22 @@ export function Cursor() {
 
   useEffect(() => {
     if (!enabled) return;
+    let last = { x: -100, y: -100 };
     const move = (e: PointerEvent) => {
+      last = { x: e.clientX, y: e.clientY };
       x.set(e.clientX);
       y.set(e.clientY);
       setTone(toneAt(e.clientX, e.clientY));
       setBig(!!(e.target as Element | null)?.closest?.("a, button"));
     };
+    // Scrolling moves the page under a still pointer, so the tone can change without a pointer event.
+    const scroll = () => setTone(toneAt(last.x, last.y));
     window.addEventListener("pointermove", move, { passive: true });
-    return () => window.removeEventListener("pointermove", move);
+    window.addEventListener("scroll", scroll, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("scroll", scroll);
+    };
   }, [enabled, x, y]);
 
   if (!enabled) return null;

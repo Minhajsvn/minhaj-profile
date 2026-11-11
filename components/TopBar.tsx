@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { socials } from "@/lib/data";
 import { DubaiClock } from "./DubaiClock";
@@ -37,6 +38,7 @@ const links = [
 export function TopBar() {
   const ref = useRef<HTMLElement>(null);
   const [tone, setTone] = useState<Tone>("paper");
+  const pathname = usePathname();
 
   useEffect(() => {
     let frame = 0;
@@ -45,14 +47,17 @@ export function TopBar() {
       frame = requestAnimationFrame(() => setTone(toneAt(window.innerWidth / 2, 24, ref.current)));
     };
     update();
+    // Route changes swap the page without a scroll event; re-check once the new page has painted.
+    const late = setTimeout(update, 400);
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     return () => {
       cancelAnimationFrame(frame);
+      clearTimeout(late);
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
-  }, []);
+  }, [pathname]);
 
   const ink = tone === "ink";
 
