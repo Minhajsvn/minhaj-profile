@@ -22,7 +22,11 @@ export function CopyEmail({ email }: { email: string }) {
 
   return (
     <>
-      <button type="button" onClick={copy} className="btn-ghost min-w-[4.75rem] px-4">
+      <button
+        type="button"
+        onClick={copy}
+        className="label min-h-11 min-w-[5.5rem] border border-current px-4 transition-colors hover:bg-lime hover:text-ink"
+      >
         {copied ? "Copied" : "Copy"}
       </button>
       <span className="sr-only" role="status" aria-live="polite">
