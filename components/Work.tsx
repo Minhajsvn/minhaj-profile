@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { getProject, projects } from "@/lib/projects";
-import { ArrowUpRight } from "./Icons";
-import { Magnetic } from "./motion/Magnetic";
 import { SplitReveal } from "./motion/SplitReveal";
-import { SectionLabel } from "./Services";
-import { WorkGrid } from "./WorkGrid";
+import { Section } from "./Section";
+import { WorkIndex } from "./WorkIndex";
 
 // The homepage shows a curated few; everything lives on /work.
 const HOME_PICKS = [
@@ -20,23 +18,23 @@ export function Work() {
   const picks = HOME_PICKS.map((s) => getProject(s)!).filter(Boolean);
 
   return (
-    <section id="work" aria-labelledby="work-title" className="scroll-mt-6 px-4 pb-20 sm:px-8 sm:pb-28">
-      <SectionLabel>Selected work</SectionLabel>
-      <SplitReveal
-        id="work-title"
-        parts={[{ text: "Stores and sites" }, { text: "that earn their keep.", soft: true }]}
-        className="mx-auto mt-10 max-w-2xl text-balance text-center text-3xl font-semibold leading-tight sm:text-[2.6rem]"
-      />
-
-      <WorkGrid items={picks} filters={false} />
-
-      <div className="mt-10 flex justify-center">
-        <Magnetic>
-          <Link href="/work" data-transition-label="All work" className="btn-ghost px-6">
-            See all {projects.length} projects <ArrowUpRight />
-          </Link>
-        </Magnetic>
+    <Section tone="ink" id="work" labelledBy="work-title" className="scroll-mt-14 pb-16 pt-20 md:pb-24 md:pt-28">
+      <div className="gutter mb-10 flex items-end justify-between gap-6 md:mb-14">
+        <SplitReveal id="work-title" parts={[{ text: "Work" }]} className="text-title" />
+        <p className="label muted max-w-[22ch] text-right">Selected stores, sites and apps — 2023 to now</p>
       </div>
-    </section>
+
+      <WorkIndex items={picks} tone="ink" />
+
+      <div className="gutter mt-10 flex justify-end">
+        <Link
+          href="/work"
+          data-transition-label="All work"
+          className="label inline-flex items-center gap-3 border border-current px-5 py-4 transition-colors hover:bg-lime hover:text-ink"
+        >
+          All {projects.length} projects →
+        </Link>
+      </div>
+    </Section>
   );
 }
