@@ -34,7 +34,8 @@ export function Hero() {
           ))}
         </motion.dl>
 
-        <motion.div {...fadeUp(0.2)} className="col-span-5 md:col-span-3 md:col-start-10 md:row-span-2">
+        {/* No fade: the portrait is the LCP element and must paint before hydration. */}
+        <div className="col-span-5 md:col-span-3 md:col-start-10 md:row-span-2">
           <div className="group relative aspect-[4/5] w-full overflow-hidden">
             <Image
               src={profile.avatar}
@@ -45,7 +46,7 @@ export function Hero() {
               className="object-cover object-[50%_35%] grayscale transition-[filter] duration-500 group-hover:grayscale-0"
             />
           </div>
-        </motion.div>
+        </div>
 
         <motion.p
           {...fadeUp(0.35)}

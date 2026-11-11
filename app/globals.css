@@ -2,37 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Editorial Mono: ink #0E0E0C, paper #EFEDE6, one lime accent #C6F432. Sections set their own tone. */
 @layer base {
-  /* Light mode — values are RGB channels of the palette hex */
   :root {
-    --background: 242 238 233; /* #F2EEE9 cream */
-    --surface: 250 248 245; /* #FAF8F5 */
-    --border: 226 220 211; /* #E2DCD3 */
-    --foreground: 0 46 35; /* #002E23 */
-    --muted: 92 107 100; /* #5C6B64 */
-    --primary: 0 46 35; /* #002E23 */
-    --primary-foreground: 242 238 233; /* #F2EEE9 */
-    --primary-hover: 15 74 58; /* #0F4A3A pine */
-    --accent: 212 162 76; /* #D4A24C gold — decorative only */
-    --tag-bg: 223 231 226; /* #DFE7E2 */
-    --tag-fg: 15 74 58; /* #0F4A3A */
     color-scheme: light;
-  }
-
-  /* Dark mode */
-  .dark {
-    --background: 0 46 35; /* #002E23 */
-    --surface: 10 61 48; /* #0A3D30 */
-    --border: 29 81 67; /* #1D5143 */
-    --foreground: 242 238 233; /* #F2EEE9 */
-    --muted: 168 181 174; /* #A8B5AE */
-    --primary: 212 162 76; /* #D4A24C */
-    --primary-foreground: 0 46 35; /* #002E23 */
-    --primary-hover: 224 181 102; /* lighter gold */
-    --accent: 212 162 76; /* #D4A24C */
-    --tag-bg: 29 81 67; /* #1D5143 */
-    --tag-fg: 207 224 214; /* #CFE0D6 */
-    color-scheme: dark;
   }
 
   html {
@@ -45,27 +18,25 @@
   }
 
   body {
-    @apply bg-background font-sans text-foreground antialiased;
+    @apply bg-paper font-sans text-ink antialiased;
     text-rendering: optimizeLegibility;
   }
 
   h1,
   h2,
   h3 {
-    @apply font-display font-semibold;
+    @apply font-sans font-semibold;
     letter-spacing: -0.035em;
   }
 
   ::selection {
-    background: rgb(var(--accent) / 0.35);
+    @apply bg-lime text-ink;
   }
 
-  /* Gold focus ring with a thin foreground halo so it stays visible on cream */
+  /* currentColor keeps the ring visible on both ink and paper (lime would fail contrast on paper) */
   :focus-visible {
-    outline: 2px solid rgb(var(--accent));
+    outline: 2px solid currentColor;
     outline-offset: 3px;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 0 6px rgb(var(--foreground) / 0.18);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -83,26 +54,6 @@
 }
 
 @layer components {
-  .btn {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-colors duration-200;
-  }
-  .btn-primary {
-    @apply btn bg-primary text-primary-foreground hover:bg-primary-hover;
-  }
-  .btn-ghost {
-    @apply btn border border-border bg-surface text-foreground shadow-sm hover:border-sage;
-  }
-  .chip {
-    @apply inline-flex items-center rounded-full bg-tag px-2.5 py-1 text-xs font-medium text-tag-foreground;
-  }
-  .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted;
-  }
-  .panel {
-    @apply rounded-panel border border-border/70 bg-surface;
-  }
-
-  /* —— Editorial Mono —— */
   .text-hero,
   .text-title,
   .text-year {
@@ -122,8 +73,9 @@
   .label {
     @apply font-mono text-xs uppercase tracking-[0.04em];
   }
+  /* 62%, not the spec's 55%: 55% ink on paper is 4.11:1 and fails WCAG AA; 62% gives 5.13:1 (6.70:1 on ink) */
   .muted {
-    color: color-mix(in srgb, currentColor 55%, transparent);
+    color: color-mix(in srgb, currentColor 62%, transparent);
   }
   .rule {
     border-color: color-mix(in srgb, currentColor 15%, transparent);

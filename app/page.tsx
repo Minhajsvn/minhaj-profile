@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Clients } from "@/components/Clients";
 import { Contact } from "@/components/Contact";
 import { Hero } from "@/components/Hero";
@@ -22,13 +23,26 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main id="main" className="flex flex-col">
-        <Hero />
+        {/* Suspense boundaries let React 19 hydrate each section as its own task instead of one long one. */}
+        <Suspense>
+          <Hero />
+        </Suspense>
         <Clients />
-        <Showreel />
-        <Work />
-        <Story />
-        <Services />
-        <Contact />
+        <Suspense>
+          <Showreel />
+        </Suspense>
+        <Suspense>
+          <Work />
+        </Suspense>
+        <Suspense>
+          <Story />
+        </Suspense>
+        <Suspense>
+          <Services />
+        </Suspense>
+        <Suspense>
+          <Contact />
+        </Suspense>
       </main>
     </>
   );

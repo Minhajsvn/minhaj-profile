@@ -41,7 +41,7 @@ export function SplitReveal({ parts, as = "h2", id, className = "", delay = 0, i
     >
       {words.map(({ w, soft }, i) => (
         <span key={i} aria-hidden className="-mb-[0.12em] inline-block overflow-hidden pb-[0.12em] align-bottom">
-          <motion.span variants={word} className={`inline-block ${soft ? "font-light text-muted" : ""}`}>
+          <motion.span variants={word} className={`inline-block ${soft ? "font-light muted" : ""}`}>
             {w}
             {i < words.length - 1 && " "}
           </motion.span>
