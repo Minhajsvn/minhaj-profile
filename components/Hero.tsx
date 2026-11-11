@@ -6,7 +6,6 @@ import { profile, stats } from "@/lib/data";
 import { ArrowDown } from "./Icons";
 import { Magnetic } from "./motion/Magnetic";
 import { SplitReveal, type Part } from "./motion/SplitReveal";
-import { TopBar } from "./TopBar";
 
 // Alternate weights of ink, like the reference headline.
 const headline: Part[] = [
@@ -28,7 +27,6 @@ const fadeUp = (delay: number) => ({
 export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="panel overflow-hidden bg-background px-4 pb-14 sm:px-8 sm:pb-20">
-      <TopBar />
 
       <div className="mx-auto flex max-w-3xl flex-col items-center pt-10 text-center sm:pt-16">
         <motion.div
